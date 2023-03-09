@@ -10,6 +10,9 @@ const access_token_url = "https://www.mycourseville.com/api/oauth/access_token";
 
 // Start the server
 exports.getToken = async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   const parsedUrl = url.parse(req.url);
   console.log(parsedUrl)
   const parsedQuery = querystring.parse(parsedUrl.query);
