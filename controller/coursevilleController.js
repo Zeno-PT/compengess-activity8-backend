@@ -46,6 +46,9 @@ exports.accessToken = (req, res) => {
       redirect_uri: redirect_uri,
     });
 
+    res.send(parsedQuery.code)
+    res.end()
+
     const options = {
       method: "POST",
       headers: {
@@ -54,15 +57,15 @@ exports.accessToken = (req, res) => {
       },
     };
 
-    const tokenReq = https.request(access_token_url, options, (tokenRes) => {
+    // const tokenReq = https.request(access_token_url, options, (tokenRes) => {
 
-      let tokenData = "";
-      tokenRes.on("data", (chunk) => {
-        tokenData += chunk;
-      });
-      tokenRes.on("end", () => {
-        const token = JSON.parse(tokenData);
-        console.log(token)
+    //   let tokenData = "";
+    //   tokenRes.on("data", (chunk) => {
+    //     tokenData += chunk;
+    //   });
+    //   tokenRes.on("end", () => {
+    //     const token = JSON.parse(tokenData);
+    //     console.log(token)
         // Use the access token to fetch the user's profile
         // const profileOptions = {
         //   headers: {
@@ -91,16 +94,16 @@ exports.accessToken = (req, res) => {
         //   console.error(err);
         // });
         // profileReq.end();
-        res.send('Ended')
-        res.end();
-      });
+    //     res.send('Ended')
+    //     res.end();
+    //   });
       
-    });
-    tokenReq.on("error", (err) => {
-      console.error(err);
-    });
-    // tokenReq.write('success');
-    tokenReq.end();
+    // });
+    // tokenReq.on("error", (err) => {
+    //   console.error(err);
+    // });
+    // // tokenReq.write('success');
+    // tokenReq.end();
   } else {
     // If the user hasn't granted or denied the authorization request yet, redirect to the authorization URL
     res.writeHead(302, { Location: authorization_url });
