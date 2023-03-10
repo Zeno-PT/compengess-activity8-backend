@@ -16,18 +16,22 @@ const token = {
 
 exports.authApp = (req, res) => {
   // res.redirect(authorization_url);
-  const options = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  };
-  const authReq = https.request(authorization_url, options, authRes);
-  authReq.on("error", (err) => {
-    console.error(err);
-  });
-  authReq.write("success");
-  authReq.end();
+  // const options = {
+  //   method: "GET",
+  //   headers: {
+  //     "Content-Type": "application/x-www-form-urlencoded",
+  //   },
+  // };
+  // const authReq = https.request(authorization_url, options, authRes);
+  // authReq.on("error", (err) => {
+  //   console.error(err);
+  // });
+  // authReq.write("success");
+  // authReq.end();
+  fetch(authorization_url)
+    .then((response) => response.json())
+    .then((data) => res.json(data))
+    .catch((error) => res.status(500).json({ error: "Server error" }));
 };
 
 exports.accessToken = (req, res) => {
