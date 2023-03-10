@@ -71,7 +71,7 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = async (req, res) => {
-  res.send(req.session.token)
+  res.send(req.session)
   res.end()
   // const profileOptions = {
   //   headers: {
