@@ -66,10 +66,9 @@ exports.accessToken = (req, res) => {
             profileRes.on("end", () => {
               const profile = JSON.parse(profileData);
 
-              // Perform any necessary user authentication/authorization here
-
               // Redirect to the home page after successful authentication
-              res.writeHead(302, { Location: "/" });
+              // res.writeHead(302, { Location: "/" });
+              res.send(profile)
               res.end();
             });
           }
