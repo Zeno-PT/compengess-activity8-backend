@@ -17,7 +17,7 @@ const token = {
   refresh_token: "ghBJHsbN9qKCquMltycX8cRFf8XkwTLT6geyx2FN",
 };
 
-exports.authApp = (req, res) => {
+exports.authApp = async (req, res) => {
   res.redirect(authorization_url);
 };
 
@@ -51,52 +51,30 @@ exports.accessToken = async (req, res) => {
     //   },
     // };
 
-    res.redirect('/courseville/get_profile_info')
+    res.redirect("/courseville/get_token");
 
-    const tokenReq = https.request(access_token_url, options, (tokenRes) => {
-      res.send('OK')
-      res.end()
-      let tokenData = "";
-      tokenRes.on("data", (chunk) => {
-        tokenData += chunk;
-      });
-      tokenRes.on("end", () => {
-        const token = JSON.parse(tokenData);
-        console.log(token);
-        const profileOptions = {
-          headers: {
-            Authorization: `Bearer ${token.access_token}`,
-          },
-        };
-        const profileReq = https.request(
-          "https://www.mycourseville.com/api/v1/public/users/me",
-          profileOptions,
-          (profileRes) => {
-            let profileData = "";
-            profileRes.on("data", (chunk) => {
-              profileData += chunk;
-            });
-            profileRes.on("end", () => {
-              const profile = JSON.parse(profileData);
-
-              // Redirect to the home page after successful authentication
-              res.writeHead(302, { Location: "/" });
-              // res.send(profile)
-              res.end();
-            });
-          }
-        );
-        profileReq.on("error", (err) => {
-          console.error(err);
-        });
-        profileReq.end();
-      });
-    });
-    tokenReq.on("error", (err) => {
-      console.error(err);
-    });
-    // tokenReq.write('success');
-    tokenReq.end();
+    // const tokenReq = https.request(access_token_url, options, (tokenRes) => {
+    //   res.send("OK");
+    //   res.end();
+    //   let tokenData = "";
+    //   tokenRes.on("data", (chunk) => {
+    //     tokenData += chunk;
+    //   });
+    //   tokenRes.on("end", () => {
+    //     const token = JSON.parse(tokenData);
+    //     console.log(token);
+    //     const profileOptions = {
+    //       headers: {
+    //         Authorization: `Bearer ${token.access_token}`,
+    //       },
+    //     };
+    //   });
+    // });
+    // tokenReq.on("error", (err) => {
+    //   console.error(err);
+    // });
+    // // tokenReq.write('success');
+    // tokenReq.end();
   } else {
     // If the user hasn't granted or denied the authorization request yet, redirect to the authorization URL
     res.writeHead(302, { Location: authorization_url });
@@ -104,6 +82,24 @@ exports.accessToken = async (req, res) => {
   }
 };
 
+exports.getToken = async (req, res) => {
+  const tokenReq = https.request(access_token_url, options, (tokenRes) => {
+    res.send("OK");
+    res.end();
+    let tokenData = "";
+    tokenRes.on("data", (chunk) => {
+      tokenData += chunk;
+    });
+    tokenRes.on("end", () => {
+      const token = JSON.parse(tokenData);
+      console.log(token);
+    });
+  });
+  tokenReq.on("error", (err) => {
+    console.error(err);
+  });
+  tokenReq.end();
+};
 exports.getProfileInformation = async (req, res) => {
   const profileOptions = {
     headers: {
@@ -134,7 +130,7 @@ exports.getProfileInformation = async (req, res) => {
   profileReq.end();
 };
 
-exports.getCourses = (req, res) => {
+exports.getCourses = async (req, res) => {
   const courseOptions = {
     headers: {
       Authorization: `Bearer ${token.access_token}`,
@@ -161,7 +157,7 @@ exports.getCourses = (req, res) => {
   courseReq.end();
 };
 
-exports.getCompEngEssAssignments = (req, res) => {
+exports.getCompEngEssAssignments = async (req, res) => {
   const assignmentOptions = {
     headers: {
       Authorization: `Bearer ${token.access_token}`,
