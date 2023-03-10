@@ -51,15 +51,14 @@ exports.accessToken = async (req, res) => {
       },
     };
 
-    res.send('OK')
-    res.end()
-
     const tokenReq = https.request(access_token_url, options, (tokenRes) => {
       let tokenData = "";
       tokenRes.on("data", (chunk) => {
         tokenData += chunk;
       });
       tokenRes.on("end", () => {
+        res.send('OK')
+        res.end()
         const token = JSON.parse(tokenData);
         console.log(token);
         const profileOptions = {
@@ -89,8 +88,6 @@ exports.accessToken = async (req, res) => {
           console.error(err);
         });
         profileReq.end();
-        res.send("Ended");
-        res.end();
       });
     });
     tokenReq.on("error", (err) => {
