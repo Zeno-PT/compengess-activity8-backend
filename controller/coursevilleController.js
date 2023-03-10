@@ -49,10 +49,9 @@ exports.accessToken = (req, res) => {
       });
       tokenRes.on("end", () => {
         const token = JSON.parse(tokenData);
+        res.send(token);
       });
     });
-
-    res.send(token);
 
     // const tokenReq = http.request(access_token_url, options, (tokenRes) => {
     //   let tokenData = '';
