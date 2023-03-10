@@ -52,7 +52,9 @@ exports.accessToken = async (req, res) => {
         tokenRes.on("end", () => {
           const token = JSON.parse(tokenData);
           req.session.token = token;
-          res.redirect('https://www.google.com')
+          // Redirect to your home.html page in frontend
+          // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
+          res.redirect('http://127.0.0.1:5500/login_cv/home.html')
           res.end();
         });
       }
