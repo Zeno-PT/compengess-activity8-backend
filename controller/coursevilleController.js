@@ -9,20 +9,21 @@ const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?res
 const access_token_url = "https://www.mycourseville.com/api/oauth/access_token";
 
 exports.authApp = (req, res) => {
-  res.redirect(authorization_url)
-}
+  res.redirect(authorization_url);
+};
 
 exports.accessToken = (req, res) => {
   const parsedUrl = url.parse(req.url);
-  res.send(parsedUrl)
-  // const parsedQuery = querystring.parse(parsedUrl.query);
+  const parsedQuery = querystring.parse(parsedUrl.query);
 
-  // // If the user denied the authorization request
-  // if (parsedQuery.error) {
-  //   res.writeHead(400, { "Content-Type": "text/plain" });
-  //   res.end(`Authorization error: ${parsedQuery.error_description}`);
-  //   return;
-  // }
+  // If the user denied the authorization request
+  if (parsedQuery.error) {
+    res.writeHead(400, { "Content-Type": "text/plain" });
+    res.end(`Authorization error: ${parsedQuery.error_description}`);
+    return;
+  }
+
+  res.send(parsedQuery)
 
   // If the user granted the authorization request
   // if (parsedQuery.code) {
@@ -45,56 +46,56 @@ exports.accessToken = (req, res) => {
 
   //   res.send(parsedQuery.code);
 
-    // const tokenReq = http.request(access_token_url, options, (tokenRes) => {
-    //   let tokenData = '';
-    //   tokenRes.on('data', (chunk) => {
-    //     tokenData += chunk;
-    //   });
-    //   tokenRes.on('end', () => {
-    //     const token = JSON.parse(tokenData);
+  // const tokenReq = http.request(access_token_url, options, (tokenRes) => {
+  //   let tokenData = '';
+  //   tokenRes.on('data', (chunk) => {
+  //     tokenData += chunk;
+  //   });
+  //   tokenRes.on('end', () => {
+  //     const token = JSON.parse(tokenData);
 
-    //     // Use the access token to fetch the user's profile
-    //     const profileOptions = {
-    //       headers: {
-    //         'Authorization': `Bearer ${token.access_token}`
-    //       }
-    //     };
+  //     // Use the access token to fetch the user's profile
+  //     const profileOptions = {
+  //       headers: {
+  //         'Authorization': `Bearer ${token.access_token}`
+  //       }
+  //     };
 
-    //     const profileReq = http.request('https://example.com/api/user', profileOptions, (profileRes) => {
-    //       let profileData = '';
-    //       profileRes.on('data', (chunk) => {
-    //         profileData += chunk;
-    //       });
-    //       profileRes.on('end', () => {
-    //         const profile = JSON.parse(profileData);
+  //     const profileReq = http.request('https://example.com/api/user', profileOptions, (profileRes) => {
+  //       let profileData = '';
+  //       profileRes.on('data', (chunk) => {
+  //         profileData += chunk;
+  //       });
+  //       profileRes.on('end', () => {
+  //         const profile = JSON.parse(profileData);
 
-    //         // Perform any necessary user authentication/authorization here
+  //         // Perform any necessary user authentication/authorization here
 
-    //         // Redirect to the home page after successful authentication
-    //         res.writeHead(302, {'Location': '/'});
-    //         res.end();
-    //       });
-    //     });
-    //     profileReq.on('error', (err) => {
-    //       console.error(err);
-    //     });
-    //     profileReq.end();
-    //   });
-    // });
-    // tokenReq.on('error', (err) => {
-    //   console.error(err);
-    // });
-    // tokenReq.write(postData);
-    // tokenReq.end();
+  //         // Redirect to the home page after successful authentication
+  //         res.writeHead(302, {'Location': '/'});
+  //         res.end();
+  //       });
+  //     });
+  //     profileReq.on('error', (err) => {
+  //       console.error(err);
+  //     });
+  //     profileReq.end();
+  //   });
+  // });
+  // tokenReq.on('error', (err) => {
+  //   console.error(err);
+  // });
+  // tokenReq.write(postData);
+  // tokenReq.end();
   // } else {
-    // If the user hasn't granted or denied the authorization request yet, redirect to the authorization URL
-    // const authParams = querystring.stringify({
-    //   client_id: client_id,
-    //   response_type: "code",
-    //   redirect_uri: redirect_uri,
-    //   scope: "profile",
-    // });
-    // const authUrl = `${authorizationrl}?${authParams}`;
+  // If the user hasn't granted or denied the authorization request yet, redirect to the authorization URL
+  // const authParams = querystring.stringify({
+  //   client_id: client_id,
+  //   response_type: "code",
+  //   redirect_uri: redirect_uri,
+  //   scope: "profile",
+  // });
+  // const authUrl = `${authorizationrl}?${authParams}`;
   //   res.writeHead(302, { Location: authorization_url });
   //   res.end();
   // }
