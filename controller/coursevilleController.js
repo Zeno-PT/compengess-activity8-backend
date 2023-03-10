@@ -51,51 +51,35 @@ exports.accessToken = async (req, res) => {
       },
     };
 
-    // res.redirect("/courseville/get_token");
-
-    const tokenReq = https.request(access_token_url, tokenOptions, (tokenRes) => {
-      // res.send("OK");
-      // res.end();
-      let tokenData = "";
-      tokenRes.on("data", (chunk) => {
-        tokenData += chunk;
-      });
-      tokenRes.on("end", () => {
-        const token = JSON.parse(tokenData);
-        res.send(token)
-        res.end()
-      });
-    });
+    const tokenReq = https.request(
+      access_token_url,
+      tokenOptions,
+      (tokenRes) => {
+        // res.send("OK");
+        // res.end();
+        let tokenData = "";
+        tokenRes.on("data", (chunk) => {
+          tokenData += chunk;
+        });
+        tokenRes.on("end", () => {
+          const token = JSON.parse(tokenData);
+          res.session.access_token = token;
+          res.send(res.session.access_token);
+          res.end();
+        });
+      }
+    );
     tokenReq.on("error", (err) => {
       console.error(err);
     });
     tokenReq.write(postData);
     tokenReq.end();
   } else {
-    // If the user hasn't granted or denied the authorization request yet, redirect to the authorization URL
     res.writeHead(302, { Location: authorization_url });
     res.end();
   }
 };
 
-exports.getToken = async (req, res) => {
-  const tokenReq = https.request(access_token_url, options, (tokenRes) => {
-    res.send("OK");
-    res.end();
-    let tokenData = "";
-    tokenRes.on("data", (chunk) => {
-      tokenData += chunk;
-    });
-    tokenRes.on("end", () => {
-      const token = JSON.parse(tokenData);
-      console.log(token);
-    });
-  });
-  tokenReq.on("error", (err) => {
-    console.error(err);
-  });
-  tokenReq.end();
-};
 exports.getProfileInformation = async (req, res) => {
   const profileOptions = {
     headers: {
