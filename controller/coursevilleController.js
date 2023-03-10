@@ -55,13 +55,14 @@ exports.accessToken = (req, res) => {
     };
 
     const tokenReq = https.request(access_token_url, options, (tokenRes) => {
-      tokenReq.setTimeout(10000);
+
       let tokenData = "";
       tokenRes.on("data", (chunk) => {
         tokenData += chunk;
       });
       tokenRes.on("end", () => {
         const token = JSON.parse(tokenData);
+        console.log(token)
         // Use the access token to fetch the user's profile
         // const profileOptions = {
         //   headers: {
@@ -90,7 +91,7 @@ exports.accessToken = (req, res) => {
         //   console.error(err);
         // });
         // profileReq.end();
-        res.send(token)
+        res.send('Ended')
         res.end();
       });
       
