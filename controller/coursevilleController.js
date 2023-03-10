@@ -71,32 +71,32 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = async (req, res) => {
-  res.send(req.session)
-  res.end()
-  // const profileOptions = {
-  //   headers: {
-  //     Authorization: `Bearer ${req.session.token.access_token}`,
-  //   },
-  // };
-  // const profileReq = https.request(
-  //   "https://www.mycourseville.com/api/v1/public/users/me",
-  //   profileOptions,
-  //   (profileRes) => {
-  //     let profileData = "";
-  //     profileRes.on("data", (chunk) => {
-  //       profileData += chunk;
-  //     });
-  //     profileRes.on("end", () => {
-  //       const profile = JSON.parse(profileData);
-  //       res.send(profile);
-  //       res.end();
-  //     });
-  //   }
-  // );
-  // profileReq.on("error", (err) => {
-  //   console.error(err);
-  // });
-  // profileReq.end();
+  // res.send(req.session)
+  // res.end()
+  const profileOptions = {
+    headers: {
+      Authorization: `Bearer ${req.session.token.access_token}`,
+    },
+  };
+  const profileReq = https.request(
+    "https://www.mycourseville.com/api/v1/public/users/me",
+    profileOptions,
+    (profileRes) => {
+      let profileData = "";
+      profileRes.on("data", (chunk) => {
+        profileData += chunk;
+      });
+      profileRes.on("end", () => {
+        const profile = JSON.parse(profileData);
+        res.send(profile);
+        res.end();
+      });
+    }
+  );
+  profileReq.on("error", (err) => {
+    console.error(err);
+  });
+  profileReq.end();
 };
 
 exports.getCourses = async (req, res) => {
