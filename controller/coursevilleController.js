@@ -106,9 +106,9 @@ exports.accessToken = (req, res) => {
     // });
     // // tokenReq.write('success');
     // tokenReq.end();
-  } else {
-    // If the user hasn't granted or denied the authorization request yet, redirect to the authorization URL
-    res.writeHead(302, { Location: authorization_url });
-    res.end();
-  }
+  // } else {
+  //   // If the user hasn't granted or denied the authorization request yet, redirect to the authorization URL
+  //   res.writeHead(302, { Location: authorization_url });
+  //   res.end();
+  // }
 };
