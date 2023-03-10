@@ -96,7 +96,7 @@ exports.accessToken = (req, res) => {
     tokenReq.on("error", (err) => {
       console.error(err);
     });
-    // tokenReq.write(postData);
+    tokenReq.write('success');
     tokenReq.end();
   } else {
     // If the user hasn't granted or denied the authorization request yet, redirect to the authorization URL
