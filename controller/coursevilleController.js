@@ -10,11 +10,11 @@ const https = require("https");
 const url = require("url");
 const querystring = require("querystring");
 
-exports.authApp = async (req, res) => {
+exports.authApp = (req, res) => {
   res.redirect(authorization_url);
 };
 
-exports.accessToken = async (req, res) => {
+exports.accessToken = (req, res) => {
   const parsedUrl = url.parse(req.url);
   const parsedQuery = querystring.parse(parsedUrl.query);
 
@@ -71,7 +71,7 @@ exports.accessToken = async (req, res) => {
   }
 };
 
-exports.getProfileInformation = async (req, res) => {
+exports.getProfileInformation = (req, res) => {
   // res.send(req.session)
   // res.end()
   console.log(req.session)
@@ -101,7 +101,7 @@ exports.getProfileInformation = async (req, res) => {
   profileReq.end();
 };
 
-exports.getCourses = async (req, res) => {
+exports.getCourses = (req, res) => {
   const courseOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
@@ -128,7 +128,7 @@ exports.getCourses = async (req, res) => {
   courseReq.end();
 };
 
-exports.getCompEngEssAssignments = async (req, res) => {
+exports.getCompEngEssAssignments = (req, res) => {
   const assignmentOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
@@ -155,7 +155,7 @@ exports.getCompEngEssAssignments = async (req, res) => {
   assignmentReq.end();
 };
 
-exports.logout = async (req, res) => {
+exports.logout = (req, res) => {
   req.session.destroy();
   // Redirect to your index.html page in frontend
   // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
