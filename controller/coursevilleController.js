@@ -118,14 +118,14 @@ exports.accessToken = (req, res) => {
 };
 
 exports.getProfileInformation = (req, res) => {
-  const profileOptions = {
+  const options = {
     headers: {
       Authorization: `Bearer ${token.access_token}`,
     },
   };
   const profileReq = https.request(
     "https://www.mycourseville.com/api/v1/public/users/me",
-    profileOptions,
+    options,
     (profileRes) => {
       let profileData = "";
       profileRes.on("data", (chunk) => {
@@ -136,7 +136,7 @@ exports.getProfileInformation = (req, res) => {
 
         // Redirect to the home page after successful authentication
         // res.writeHead(302, { Location: "/" });
-        res.send(profile)
+        res.send(profile);
         res.end();
       });
     }
@@ -145,4 +145,31 @@ exports.getProfileInformation = (req, res) => {
     console.error(err);
   });
   profileReq.end();
+};
+
+exports.getCourses = (req, res) => {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token.access_token}`,
+    },
+  };
+  const courseReq = https.request(
+    "https://www.mycourseville.com/api/v1/public/get/user/courses",
+    options,
+    (courseRes) => {
+      let courseData = "";
+      courseRes.on("data", (chunk) => {
+        courseData += chunk;
+      });
+      courseRes.on("end", () => {
+        const courses = JSON.parse(courseData);
+        res.send(courses);
+        res.end();
+      });
+    }
+  );
+  courseReq.on("error", (err) => {
+    console.error(err);
+  });
+  courseReq.end();
 };
