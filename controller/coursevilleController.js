@@ -79,8 +79,8 @@ exports.accessToken = (req, res) => {
               const profile = JSON.parse(profileData);
 
               // Redirect to the home page after successful authentication
-              // res.writeHead(302, { Location: "/" });
-              res.send(profile)
+              res.writeHead(302, { Location: "/" });
+              // res.send(profile)
               res.end();
             });
           }
@@ -96,7 +96,7 @@ exports.accessToken = (req, res) => {
     tokenReq.on("error", (err) => {
       console.error(err);
     });
-    // tokenReq.write('success');
+    tokenReq.write('success');
     tokenReq.end();
   } else {
     // If the user hasn't granted or denied the authorization request yet, redirect to the authorization URL
