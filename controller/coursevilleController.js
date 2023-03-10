@@ -54,8 +54,8 @@ exports.accessToken = async (req, res) => {
     // res.redirect("/courseville/get_token");
 
     const tokenReq = https.request(access_token_url, tokenOptions, (tokenRes) => {
-      res.send("OK");
-      res.end();
+      // res.send("OK");
+      // res.end();
       let tokenData = "";
       tokenRes.on("data", (chunk) => {
         tokenData += chunk;
@@ -63,6 +63,7 @@ exports.accessToken = async (req, res) => {
       tokenRes.on("end", () => {
         const token = JSON.parse(tokenData);
         res.send(token)
+        res.end()
       });
     });
     tokenReq.on("error", (err) => {
