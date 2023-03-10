@@ -8,7 +8,10 @@ const redirect_uri = "http://44.214.169.149:3000/courseville/access_token";
 const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`;
 const access_token_url = "https://www.mycourseville.com/api/oauth/access_token";
 
-// Start the server
+exports.authApp = (req, res) => {
+  res.redirect(authorization_url)
+}
+
 exports.accessToken = (req, res) => {
   const parsedUrl = url.parse(req.url);
   res.send(parsedUrl)
