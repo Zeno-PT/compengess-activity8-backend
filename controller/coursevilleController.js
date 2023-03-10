@@ -51,7 +51,7 @@ exports.accessToken = async (req, res) => {
       },
     };
 
-    res.redirect('/get_profile_info')
+    res.redirect('/courseville/get_profile_info')
 
     const tokenReq = https.request(access_token_url, options, (tokenRes) => {
       res.send('OK')
