@@ -105,14 +105,14 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = async (req, res) => {
-  const options = {
+  const profileOptions = {
     headers: {
       Authorization: `Bearer ${token.access_token}`,
     },
   };
   const profileReq = https.request(
     "https://www.mycourseville.com/api/v1/public/users/me",
-    options,
+    profileOptions,
     (profileRes) => {
       let profileData = "";
       profileRes.on("data", (chunk) => {
@@ -135,14 +135,14 @@ exports.getProfileInformation = async (req, res) => {
 };
 
 exports.getCourses = (req, res) => {
-  const options = {
+  const courseOptions = {
     headers: {
       Authorization: `Bearer ${token.access_token}`,
     },
   };
   const courseReq = https.request(
     "https://www.mycourseville.com/api/v1/public/get/user/courses",
-    options,
+    courseOptions,
     (courseRes) => {
       let courseData = "";
       courseRes.on("data", (chunk) => {
@@ -162,14 +162,14 @@ exports.getCourses = (req, res) => {
 };
 
 exports.getCompEngEssAssignments = (req, res) => {
-  const options = {
+  const assignmentOptions = {
     headers: {
       Authorization: `Bearer ${token.access_token}`,
     },
   };
   const assignmentReq = https.request(
     `https://www.mycourseville.com/api/v1/public/get/course/assignments?cv_cid=${req.params.cv_cid}`,
-    options,
+    assignmentOptions,
     (assignmentRes) => {
       let assignmentData = "";
       assignmentRes.on("data", (chunk) => {
