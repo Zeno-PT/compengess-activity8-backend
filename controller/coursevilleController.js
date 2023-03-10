@@ -64,7 +64,7 @@ exports.accessToken = async (req, res) => {
         tokenRes.on("end", () => {
           const token = JSON.parse(tokenData);
           req.session.access_token = token;
-          res.send('Value set in session');
+          res.send(token);
           res.end();
         });
       }
