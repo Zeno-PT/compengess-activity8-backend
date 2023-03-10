@@ -1,4 +1,4 @@
-const http = require("http");
+const https = require("https");
 const url = require("url");
 const querystring = require("querystring");
 
@@ -42,7 +42,7 @@ exports.accessToken = (req, res) => {
       },
     };
 
-    const tokenReq = http.request(access_token_url, options, (tokenRes) => {
+    const tokenReq = https.request(access_token_url, options, (tokenRes) => {
       let tokenData = "";
       tokenRes.on("data", (chunk) => {
         tokenData += chunk;
