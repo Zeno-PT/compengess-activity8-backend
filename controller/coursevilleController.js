@@ -5,6 +5,7 @@ const querystring = require("querystring");
 const client_id = "PWIuxwNVlZh70gSnWMoxfWcFpg5c7Odk1MLx3wSA";
 const client_secret = "yC5OC38phIdKrBBqCvrbyuxy0TZbGDkrZmokp9Ke";
 const redirect_uri = "http://44.214.169.149:3000/courseville/access_token";
+
 const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`;
 const access_token_url = "https://www.mycourseville.com/api/oauth/access_token";
 const token = {
@@ -28,10 +29,7 @@ exports.authApp = (req, res) => {
   // });
   // authReq.write("success");
   // authReq.end();
-  fetch(authorization_url)
-    .then((response) => response.json())
-    .then((data) => res.json(data))
-    .catch((error) => res.status(500).json({ error: "Server error" }));
+  res.redirect(authorization_url);
 };
 
 exports.accessToken = (req, res) => {
