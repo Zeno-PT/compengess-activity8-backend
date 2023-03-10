@@ -2,12 +2,14 @@ const https = require("https");
 const url = require("url");
 const querystring = require("querystring");
 
+// TODO: Change cilentId, clientSecret, redirectUri below
 const client_id = "PWIuxwNVlZh70gSnWMoxfWcFpg5c7Odk1MLx3wSA";
 const client_secret = "yC5OC38phIdKrBBqCvrbyuxy0TZbGDkrZmokp9Ke";
 const redirect_uri = "http://44.214.169.149:3000/courseville/access_token";
 
 const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`;
 const access_token_url = "https://www.mycourseville.com/api/oauth/access_token";
+
 const token = {
   access_token: "oo4Ko8lK1UBaVnoiWJBRVFusipdgfIet1cp48rlq",
   token_type: "Bearer",
@@ -16,19 +18,6 @@ const token = {
 };
 
 exports.authApp = (req, res) => {
-  // res.redirect(authorization_url);
-  // const options = {
-  //   method: "GET",
-  //   headers: {
-  //     "Content-Type": "application/x-www-form-urlencoded",
-  //   },
-  // };
-  // const authReq = https.request(authorization_url, options, authRes);
-  // authReq.on("error", (err) => {
-  //   console.error(err);
-  // });
-  // authReq.write("success");
-  // authReq.end();
   res.redirect(authorization_url);
 };
 
@@ -174,4 +163,29 @@ exports.getCourses = (req, res) => {
     console.error(err);
   });
   courseReq.end();
+};
+
+exports.getCompEngEssAssignments = (req, res) => {
+  // const parsedUrl = url.parse(req.url);
+  // const parsedQuery = querystring.parse(parsedUrl.query);
+  // const cv_cid = parsedQuery.cv_cid;
+  const assignmentReq = https.request(
+    `https://www.mycourseville.com/api/v1/public/get/course/assignments?cv_cid=${req.params.cv_cid}"`,
+    options,
+    (assignmentRes) => {
+      let assignmentData = "";
+      assignmentRes.on("data", (chunk) => {
+        assignmentData += chunk;
+      });
+      assignmentRes.on("end", () => {
+        const assignments = JSON.parse(assignmentData);
+        res.send(assignments);
+        res.end();
+      });
+    }
+  );
+  assignmentReq.on("error", (err) => {
+    console.error(err);
+  });
+  assignmentReq.end();
 };
