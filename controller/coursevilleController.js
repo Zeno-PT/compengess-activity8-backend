@@ -43,13 +43,13 @@ exports.accessToken = async (req, res) => {
       redirect_uri: redirect_uri,
     });
 
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        // "Content-Length": postData.length,
-      },
-    };
+    // const options = {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //     // "Content-Length": postData.length,
+    //   },
+    // };
 
     res.redirect('/courseville/get_profile_info')
 
