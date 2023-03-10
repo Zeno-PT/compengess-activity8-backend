@@ -23,8 +23,6 @@ exports.accessToken = (req, res) => {
     return;
   }
 
-  res.send(parsedQuery);
-
   // If the user granted the authorization request
   if (parsedQuery.code) {
     // Exchange the authorization code for an access token
@@ -89,13 +87,6 @@ exports.accessToken = (req, res) => {
     // tokenReq.end();
   } else {
     // If the user hasn't granted or denied the authorization request yet, redirect to the authorization URL
-    const authParams = querystring.stringify({
-      client_id: client_id,
-      response_type: "code",
-      redirect_uri: redirect_uri,
-      scope: "profile",
-    });
-    const authUrl = `${authorizationrl}?${authParams}`;
     res.writeHead(302, { Location: authorization_url });
     res.end();
   }
