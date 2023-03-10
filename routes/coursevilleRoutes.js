@@ -11,5 +11,6 @@ router.get(
   "/get_cee_assignments/:cv_cid",
   coursevilleController.getCompEngEssAssignments
 );
+router.get("/logout", coursevilleController.logout)
 
 module.exports = router;
