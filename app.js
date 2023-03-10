@@ -12,7 +12,7 @@ app.use(cors());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(express.static('static'))
-app.use(session({secret: 'XXX', resave: true, saveUninitialized: true}))
+app.use(session({secret: 'my-secret', resave: false, saveUninitialized: true}))
 
 app.use("/items", itemsRoutes);
 app.use("/courseville", coursevilleRoutes)
