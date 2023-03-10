@@ -43,14 +43,15 @@ exports.accessToken = (req, res) => {
     };
 
     const tokenReq = https.request(access_token_url, options, (tokenRes) => {
-      let tokenData = "";
-      tokenRes.on("data", (chunk) => {
-        tokenData += chunk;
-      });
-      tokenRes.on("end", () => {
-        const token = JSON.parse(tokenData);
-        res.send(token);
-      });
+      res.send(tokenRes)
+      // let tokenData = "";
+      // tokenRes.on("data", (chunk) => {
+      //   tokenData += chunk;
+      // });
+      // tokenRes.on("end", () => {
+      //   const token = JSON.parse(tokenData);
+      //   res.send(token);
+      // });
     });
 
     // const tokenReq = http.request(access_token_url, options, (tokenRes) => {
