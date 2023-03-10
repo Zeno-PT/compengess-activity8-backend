@@ -47,9 +47,11 @@ exports.accessToken = async (req, res) => {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "Content-Length": postData.length,
+        // "Content-Length": postData.length,
       },
     };
+
+    res.redirect('/get_profile_info')
 
     const tokenReq = https.request(access_token_url, options, (tokenRes) => {
       res.send('OK')
