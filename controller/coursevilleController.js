@@ -166,9 +166,11 @@ exports.getCourses = (req, res) => {
 };
 
 exports.getCompEngEssAssignments = (req, res) => {
-  // const parsedUrl = url.parse(req.url);
-  // const parsedQuery = querystring.parse(parsedUrl.query);
-  // const cv_cid = parsedQuery.cv_cid;
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token.access_token}`,
+    },
+  };
   const assignmentReq = https.request(
     `https://www.mycourseville.com/api/v1/public/get/course/assignments?cv_cid=${req.params.cv_cid}`,
     options,
