@@ -55,6 +55,7 @@ exports.accessToken = (req, res) => {
     };
 
     const tokenReq = https.request(access_token_url, options, (tokenRes) => {
+      tokenReq.setTimeout(10000);
       let tokenData = "";
       tokenRes.on("data", (chunk) => {
         tokenData += chunk;
