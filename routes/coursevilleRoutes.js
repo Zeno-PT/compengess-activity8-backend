@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.get("/auth_app", coursevilleController.authApp);
 router.get("/access_token", coursevilleController.accessToken);
+router.get("/get_info", coursevilleController.getProfileInformation);
 
 module.exports = router;
