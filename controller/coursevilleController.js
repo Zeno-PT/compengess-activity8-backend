@@ -52,13 +52,13 @@ exports.accessToken = async (req, res) => {
     };
 
     const tokenReq = https.request(access_token_url, options, (tokenRes) => {
+      res.send('OK')
+      res.end()
       let tokenData = "";
       tokenRes.on("data", (chunk) => {
         tokenData += chunk;
       });
       tokenRes.on("end", () => {
-        res.send('OK')
-        res.end()
         const token = JSON.parse(tokenData);
         console.log(token);
         const profileOptions = {
