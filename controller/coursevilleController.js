@@ -73,6 +73,7 @@ exports.accessToken = async (req, res) => {
 exports.getProfileInformation = async (req, res) => {
   // res.send(req.session)
   // res.end()
+  console.log(req.session)
   const profileOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
