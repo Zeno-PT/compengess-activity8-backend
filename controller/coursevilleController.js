@@ -9,7 +9,13 @@ const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?res
 const access_token_url = "https://www.mycourseville.com/api/oauth/access_token";
 
 exports.authApp = (req, res) => {
-  res.redirect(authorization_url);
+  // res.redirect(authorization_url);
+  const authReq  = https.request(authorization_url)
+  authReq.on("error", (err) => {
+    console.error(err);
+  });
+  // authReq.write(postData);
+  authReq.end();
 };
 
 exports.accessToken = (req, res) => {
@@ -50,39 +56,41 @@ exports.accessToken = (req, res) => {
       tokenRes.on("end", () => {
         const token = JSON.parse(tokenData);
         // Use the access token to fetch the user's profile
-        const profileOptions = {
-          headers: {
-            Authorization: `Bearer ${token.access_token}`,
-          },
-        };
-        const profileReq = https.request(
-          "https://www.mycourseville.com/api/v1/public/users/me",
-          profileOptions,
-          (profileRes) => {
-            let profileData = "";
-            profileRes.on("data", (chunk) => {
-              profileData += chunk;
-            });
-            profileRes.on("end", () => {
-              const profile = JSON.parse(profileData);
+        // const profileOptions = {
+        //   headers: {
+        //     Authorization: `Bearer ${token.access_token}`,
+        //   },
+        // };
+        // const profileReq = https.request(
+        //   "https://www.mycourseville.com/api/v1/public/users/me",
+        //   profileOptions,
+        //   (profileRes) => {
+        //     let profileData = "";
+        //     profileRes.on("data", (chunk) => {
+        //       profileData += chunk;
+        //     });
+        //     profileRes.on("end", () => {
+        //       const profile = JSON.parse(profileData);
 
-              // Redirect to the home page after successful authentication
-              // res.writeHead(302, { Location: "/" });
-              res.send(profile)
-              res.end();
-            });
-          }
-        );
-        profileReq.on("error", (err) => {
-          console.error(err);
-        });
-        profileReq.end();
+        //       // Redirect to the home page after successful authentication
+        //       // res.writeHead(302, { Location: "/" });
+        //       // res.send(profile)
+        //       // res.end();
+        //     });
+        //   }
+        // );
+        // profileReq.on("error", (err) => {
+        //   console.error(err);
+        // });
+        // profileReq.end();
+        res.send(token)
+        res.end();
       });
     });
     tokenReq.on("error", (err) => {
       console.error(err);
     });
-    tokenReq.write(postData);
+    // tokenReq.write(postData);
     tokenReq.end();
   } else {
     // If the user hasn't granted or denied the authorization request yet, redirect to the authorization URL
