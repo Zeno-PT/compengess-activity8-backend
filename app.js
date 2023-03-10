@@ -8,11 +8,11 @@ const coursevilleRoutes = require("./routes/coursevilleRoutes")
 
 const app = express();
 
+app.use(session({secret: 'my-secret', resave: false, saveUninitialized: true}))
 app.use(cors());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(express.static('static'))
-app.use(session({secret: 'my-secret', resave: false, saveUninitialized: true}))
 
 app.use("/items", itemsRoutes);
 app.use("/courseville", coursevilleRoutes)
