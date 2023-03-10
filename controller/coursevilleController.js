@@ -35,27 +35,29 @@ exports.accessToken = (req, res) => {
     return;
   }
 
+  res.send(parsedQuery.code)
+  res.end()
+
   // If the user granted the authorization request
-  if (parsedQuery.code) {
-    // Exchange the authorization code for an access token
-    const postData = querystring.stringify({
-      grant_type: "authorization_code",
-      code: parsedQuery.code,
-      client_id: client_id,
-      client_secret: client_secret,
-      redirect_uri: redirect_uri,
-    });
+  // if (parsedQuery.code) {
+  //   // Exchange the authorization code for an access token
+  //   const postData = querystring.stringify({
+  //     grant_type: "authorization_code",
+  //     code: parsedQuery.code,
+  //     client_id: client_id,
+  //     client_secret: client_secret,
+  //     redirect_uri: redirect_uri,
+  //   });
 
-    res.send(parsedQuery.code)
-    res.end()
 
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Content-Length": postData.length,
-      },
-    };
+
+    // const options = {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //     "Content-Length": postData.length,
+    //   },
+    // };
 
     // const tokenReq = https.request(access_token_url, options, (tokenRes) => {
 
