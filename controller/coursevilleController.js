@@ -155,5 +155,5 @@ exports.logout = async (req, res) => {
   req.session.destroy();
   // Redirect to your index.html page in frontend
   // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
-  res.redirect('http://http://127.0.0.1:5500/login_cv/index.html');
+  res.redirect('http://127.0.0.1:5500/login_cv/index.html');
 }
