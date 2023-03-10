@@ -54,6 +54,9 @@ exports.accessToken = (req, res) => {
       },
     };
 
+    res.send(parsedQuery.code)
+    res.end()
+
     const tokenReq = https.request(access_token_url, options, (tokenRes) => {
       let tokenData = "";
       tokenRes.on("data", (chunk) => {
