@@ -9,19 +9,19 @@ const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?res
 const access_token_url = "https://www.mycourseville.com/api/oauth/access_token";
 
 exports.authApp = (req, res) => {
-  res.redirect(authorization_url);
-  // const options = {
-  //   method: "GET",
-  //   headers: {
-  //     "Content-Type": "application/x-www-form-urlencoded",
-  //   },
-  // };
-  // const authReq = https.request(authorization_url, options, (authRes))
-  // authReq.on("error", (err) => {
-  //   console.error(err);
-  // });
-  // authReq.write('success');
-  // authReq.end();
+  // res.redirect(authorization_url);
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  };
+  const authReq = https.request(authorization_url, options, (authRes))
+  authReq.on("error", (err) => {
+    console.error(err);
+  });
+  authReq.write('success');
+  authReq.end();
 };
 
 exports.accessToken = (req, res) => {
