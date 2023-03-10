@@ -4,46 +4,43 @@ const querystring = require("querystring");
 
 const client_id = "PWIuxwNVlZh70gSnWMoxfWcFpg5c7Odk1MLx3wSA";
 const client_secret = "yC5OC38phIdKrBBqCvrbyuxy0TZbGDkrZmokp9Ke";
-const redirect_uri = "http://44.214.169.149/home.html";
+const redirect_uri = "http://44.214.169.149:3000/courseville/access_token";
 const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`;
 const access_token_url = "https://www.mycourseville.com/api/oauth/access_token";
 
 // Start the server
-exports.getToken = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+exports.accessToken = (req, res) => {
   const parsedUrl = url.parse(req.url);
-  console.log(parsedUrl)
-  const parsedQuery = querystring.parse(parsedUrl.query);
+  res.send(parsedUrl)
+  // const parsedQuery = querystring.parse(parsedUrl.query);
 
-  // If the user denied the authorization request
-  if (parsedQuery.error) {
-    res.writeHead(400, { "Content-Type": "text/plain" });
-    res.end(`Authorization error: ${parsedQuery.error_description}`);
-    return;
-  }
+  // // If the user denied the authorization request
+  // if (parsedQuery.error) {
+  //   res.writeHead(400, { "Content-Type": "text/plain" });
+  //   res.end(`Authorization error: ${parsedQuery.error_description}`);
+  //   return;
+  // }
 
   // If the user granted the authorization request
-  if (parsedQuery.code) {
-    // Exchange the authorization code for an access token
-    const postData = querystring.stringify({
-      grant_type: "authorization_code",
-      code: parsedQuery.code,
-      client_id: client_id,
-      client_secret: client_secret,
-      redirect_uri: redirect_uri,
-    });
+  // if (parsedQuery.code) {
+  //   // Exchange the authorization code for an access token
+  //   const postData = querystring.stringify({
+  //     grant_type: "authorization_code",
+  //     code: parsedQuery.code,
+  //     client_id: client_id,
+  //     client_secret: client_secret,
+  //     redirect_uri: redirect_uri,
+  //   });
 
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Content-Length": postData.length,
-      },
-    };
+  //   const options = {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/x-www-form-urlencoded",
+  //       "Content-Length": postData.length,
+  //     },
+  //   };
 
-    res.send(parsedQuery.code);
+  //   res.send(parsedQuery.code);
 
     // const tokenReq = http.request(access_token_url, options, (tokenRes) => {
     //   let tokenData = '';
@@ -86,7 +83,7 @@ exports.getToken = async (req, res) => {
     // });
     // tokenReq.write(postData);
     // tokenReq.end();
-  } else {
+  // } else {
     // If the user hasn't granted or denied the authorization request yet, redirect to the authorization URL
     // const authParams = querystring.stringify({
     //   client_id: client_id,
@@ -95,7 +92,7 @@ exports.getToken = async (req, res) => {
     //   scope: "profile",
     // });
     // const authUrl = `${authorizationrl}?${authParams}`;
-    res.writeHead(302, { Location: authorization_url });
-    res.end();
-  }
+  //   res.writeHead(302, { Location: authorization_url });
+  //   res.end();
+  // }
 };

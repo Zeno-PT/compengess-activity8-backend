@@ -3,7 +3,7 @@ const cors = require("cors");
 const bodyParser = require('body-parser')
 const AppError = require("./utils/appError")
 const itemsRoutes = require("./routes/itemRoutes");
-const loginRoutes = require("./routes/loginRoutes")
+const coursevilleRoutes = require("./routes/coursevilleRoutes")
 
 const app = express();
 
@@ -13,9 +13,9 @@ app.use(bodyParser.urlencoded({ extended: true}))
 app.use(express.static('static'))
 
 app.use("/items", itemsRoutes);
-app.use("/api", loginRoutes)
+app.use("/courseville", coursevilleRoutes)
 app.get('/', (req, res) => {
-  res.send('This api are running.')
+  res.send('Congratulation. This server is succesfully run.')
 })
 
 app.all("*", (req, res, next) => {
