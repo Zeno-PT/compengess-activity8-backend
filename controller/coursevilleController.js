@@ -52,11 +52,9 @@ exports.accessToken = async (req, res) => {
         tokenRes.on("end", () => {
           const token = JSON.parse(tokenData);
           req.session.token = token;
-          res.send(req.session.token)
-          // res.end()
           // Redirect to your home.html page in frontend
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
-          // res.redirect('http://127.0.0.1:5500/login_cv/home.html')
+          res.redirect('http://127.0.0.1:5500/login_cv/home.html')
           res.end();
         });
       }
@@ -73,30 +71,32 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = async (req, res) => {
-  const profileOptions = {
-    headers: {
-      Authorization: `Bearer ${req.session.token.access_token}`,
-    },
-  };
-  const profileReq = https.request(
-    "https://www.mycourseville.com/api/v1/public/users/me",
-    profileOptions,
-    (profileRes) => {
-      let profileData = "";
-      profileRes.on("data", (chunk) => {
-        profileData += chunk;
-      });
-      profileRes.on("end", () => {
-        const profile = JSON.parse(profileData);
-        res.send(profile);
-        res.end();
-      });
-    }
-  );
-  profileReq.on("error", (err) => {
-    console.error(err);
-  });
-  profileReq.end();
+  res.send(req.session.token)
+  res.end()
+  // const profileOptions = {
+  //   headers: {
+  //     Authorization: `Bearer ${req.session.token.access_token}`,
+  //   },
+  // };
+  // const profileReq = https.request(
+  //   "https://www.mycourseville.com/api/v1/public/users/me",
+  //   profileOptions,
+  //   (profileRes) => {
+  //     let profileData = "";
+  //     profileRes.on("data", (chunk) => {
+  //       profileData += chunk;
+  //     });
+  //     profileRes.on("end", () => {
+  //       const profile = JSON.parse(profileData);
+  //       res.send(profile);
+  //       res.end();
+  //     });
+  //   }
+  // );
+  // profileReq.on("error", (err) => {
+  //   console.error(err);
+  // });
+  // profileReq.end();
 };
 
 exports.getCourses = async (req, res) => {
