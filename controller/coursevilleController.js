@@ -79,14 +79,14 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = async (req, res) => {
-  res.send(token)
-  res.end()
-  // req.session.token = {
-  //   access_token: 'Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe',
-  //   token_type: 'Bearer',
-  //   expires_in: 1209600,
-  //   refresh_token: 'jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA'
-  // }
+  // res.send(token)
+  // res.end()
+  req.session.token = {
+    access_token: 'Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe',
+    token_type: 'Bearer',
+    expires_in: 1209600,
+    refresh_token: 'jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA'
+  }
   console.log(req.session)
   const profileOptions = {
     headers: {
@@ -115,6 +115,12 @@ exports.getProfileInformation = async (req, res) => {
 };
 
 exports.getCourses = async (req, res) => {
+  req.session.token = {
+      access_token: 'Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe',
+      token_type: 'Bearer',
+      expires_in: 1209600,
+      refresh_token: 'jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA'
+    }
   const courseOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
@@ -142,6 +148,12 @@ exports.getCourses = async (req, res) => {
 };
 
 exports.getCompEngEssAssignments = async (req, res) => {
+  req.session.token = {
+    access_token: 'Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe',
+    token_type: 'Bearer',
+    expires_in: 1209600,
+    refresh_token: 'jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA'
+  }
   const assignmentOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
