@@ -13,11 +13,7 @@ const url = require("url");
 const querystring = require("querystring");
 
 exports.authApp = async (req, res) => {
-  // res.redirect(authorization_url);
-  https.request((authorization_url) => {
-    res.redirect(authorization_url);
-    res.end()
-  });
+  res.redirect(authorization_url);
 };
 
 exports.accessToken = async (req, res) => {
