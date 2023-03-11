@@ -1,7 +1,10 @@
-// TODO: Change cilentId, clientSecret, EC2 backend instance below
+// TODO: Change cilentId, clientSecret, EC2 backend instance IP address, and frontend IP address and port below
 const client_id = "PWIuxwNVlZh70gSnWMoxfWcFpg5c7Odk1MLx3wSA";
 const client_secret = "yC5OC38phIdKrBBqCvrbyuxy0TZbGDkrZmokp9Ke";
 const backendEC2IPAddress = "44.214.169.149";
+// TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
+const frontendIPAddress = "127.0.0.1";
+const frontendPort = "8000";
 
 const redirect_uri = `http://${backendEC2IPAddress}:3000/courseville/access_token`;
 const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`;
@@ -56,11 +59,18 @@ exports.accessToken = async (req, res) => {
           const token = JSON.parse(tokenData);
           req.session.token = token;
           // console.log(token);
-          fs.writeFileSync('./token.json', JSON.stringify(token), 'utf-8', err => {console.error(err)})
+          fs.writeFileSync(
+            "./token.json",
+            JSON.stringify(token),
+            "utf-8",
+            (err) => {
+              console.error(err);
+            }
+          );
           // Redirect to your home.html page in frontend
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
           // res.send(token);
-          res.redirect('http://127.0.0.1:8000/home.html')
+          res.redirect(`http://${frontendIPAddress}:${frontendPort}/home.html`);
           // req.session.save()
           // res.end();
         });
@@ -81,9 +91,10 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = async (req, res) => {
-   const token = fs.readFileSync('./token.json', 'utf-8', err => {console.error(err)})
-   console.log(JSON.parse(token))
-   req.session.token = JSON.parse(token)
+  const token = fs.readFileSync("./token.json", "utf-8", (err) => {
+    console.error(err);
+  });
+  req.session.token = JSON.parse(token);
   //  res.send(a)
   //  res.end()
   // res.send(token)
@@ -94,7 +105,6 @@ exports.getProfileInformation = async (req, res) => {
   //   expires_in: 1209600,
   //   refresh_token: "jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA",
   // };
-  console.log(req.session);
   const profileOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
@@ -122,8 +132,10 @@ exports.getProfileInformation = async (req, res) => {
 };
 
 exports.getCourses = async (req, res) => {
-  const token = fs.readFile('./token.json', 'utf-8', err => {console.error(err)})
-  req.session.token = JSON.parse(token)
+  const token = fs.readFileSync("./token.json", "utf-8", (err) => {
+    console.error(err);
+  });
+  req.session.token = JSON.parse(token);
   const courseOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
@@ -151,8 +163,10 @@ exports.getCourses = async (req, res) => {
 };
 
 exports.getCompEngEssAssignments = async (req, res) => {
-  const token = fs.readFile('./token.json', 'utf-8', err => {console.error(err)})
-  req.session.token = JSON.parse(token)
+  const token = fs.readFileSync("./token.json", "utf-8", (err) => {
+    console.error(err);
+  });
+  req.session.token = JSON.parse(token);
   const assignmentOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
@@ -181,8 +195,7 @@ exports.getCompEngEssAssignments = async (req, res) => {
 
 exports.logout = async (req, res) => {
   req.session.destroy();
-  // Redirect to your index.html page in frontend
-  // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
-  res.redirect("http://127.0.0.1:5500/login_cv/index.html");
+  fs.unlinkSync("./token.json");
+  res.redirect(`http://${frontendIPAddress}:${frontendPort}`);
   res.end();
 };
