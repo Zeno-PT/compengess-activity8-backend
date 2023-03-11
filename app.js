@@ -11,7 +11,7 @@ const app = express();
 app.use(
   session({ secret: "my-secret", resave: false, saveUninitialized: false })
 );
-app.use(cors({ origin: "http://127.0.0.1:8000", credentials: true }));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("static"));
@@ -25,5 +25,9 @@ app.get("/", (req, res) => {
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });
+
+app.use(
+  session({ secret: "my-secret", resave: false, saveUninitialized: false })
+);
 
 module.exports = app;
