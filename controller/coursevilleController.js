@@ -82,7 +82,7 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = async (req, res) => {
-   let a = fs.readFileSync('./token.json')
+   a = fs.readFileSync('./token.json', 'utf-8')
    req.session.token = a
    console.log(req.session)
   //  res.send(a)
