@@ -6,6 +6,7 @@ const backendEC2IPAddress = "44.214.169.149";
 const redirect_uri = `http://${backendEC2IPAddress}:3000/courseville/access_token`;
 const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`;
 const access_token_url = "https://www.mycourseville.com/api/oauth/access_token";
+const token = {}
 
 const https = require("https");
 const url = require("url");
@@ -51,9 +52,10 @@ exports.accessToken = async (req, res) => {
           tokenData += chunk;
         });
         tokenRes.on("end", () => {
-          const token = JSON.parse(tokenData);
+          // const token = JSON.parse(tokenData);
+          token = JSON.parse(tokenData);
           req.session.token = token;
-          console.log(req.session)
+          console.log(token)
           // Redirect to your home.html page in frontend
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
           
@@ -77,7 +79,7 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = async (req, res) => {
-  res.send(req.session)
+  res.send(token)
   res.end()
   // req.session.token = {
   //   access_token: 'Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe',
