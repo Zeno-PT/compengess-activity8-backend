@@ -11,6 +11,7 @@ let token = {};
 const https = require("https");
 const url = require("url");
 const querystring = require("querystring");
+const fs = require("fs");
 
 exports.authApp = async (req, res) => {
   res.redirect(authorization_url);
@@ -56,6 +57,7 @@ exports.accessToken = async (req, res) => {
           token = JSON.parse(tokenData);
           req.session.token = token;
           console.log(token);
+          fs.writeFile('token.txt', token, err => {console.error(err)})
           // Redirect to your home.html page in frontend
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
           // res.send(token);
@@ -80,6 +82,9 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = async (req, res) => {
+   let a = fs.readFileSync('token.txt')
+   res.send(a)
+   res.end()
   // res.send(token)
   // res.end()
   // req.session.token = {

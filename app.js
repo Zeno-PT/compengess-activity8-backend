@@ -26,8 +26,4 @@ app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });
 
-app.use(
-  session({ secret: "my-secret", resave: false, saveUninitialized: false })
-);
-
 module.exports = app;
