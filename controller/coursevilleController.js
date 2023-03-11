@@ -1,8 +1,9 @@
-// TODO: Change cilentId, clientSecret, redirectUri below
+// TODO: Change cilentId, clientSecret, EC2 backend instance below
 const client_id = "PWIuxwNVlZh70gSnWMoxfWcFpg5c7Odk1MLx3wSA";
 const client_secret = "yC5OC38phIdKrBBqCvrbyuxy0TZbGDkrZmokp9Ke";
-const redirect_uri = "http://44.214.169.149:3000/courseville/access_token";
+const backendEC2IPAddress = "44.214.169.149";
 
+const redirect_uri = `http://${backendEC2IPAddress}:3000/courseville/access_token`;
 const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`;
 const access_token_url = "https://www.mycourseville.com/api/oauth/access_token";
 
@@ -52,6 +53,7 @@ exports.accessToken = async (req, res) => {
         tokenRes.on("end", () => {
           const token = JSON.parse(tokenData);
           req.session.token = token;
+          console.log(req.session.token.access_token)
           // Redirect to your home.html page in frontend
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
           
@@ -65,8 +67,7 @@ exports.accessToken = async (req, res) => {
     });
     tokenReq.write(postData);
     tokenReq.end();
-    console.log(req.session.token.access_token)
-    res.redirect('http://127.0.0.1:5500/login_cv/home.html')
+    res.redirect('http://127.0.0.1:8000/home.html')
     res.end();
   } else {
     res.writeHead(302, { Location: authorization_url });
