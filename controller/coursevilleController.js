@@ -6,7 +6,7 @@ const backendEC2IPAddress = "44.214.169.149";
 const redirect_uri = `http://${backendEC2IPAddress}:3000/courseville/access_token`;
 const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`;
 const access_token_url = "https://www.mycourseville.com/api/oauth/access_token";
-let token = {}
+let token = {};
 
 const https = require("https");
 const url = require("url");
@@ -14,7 +14,10 @@ const querystring = require("querystring");
 
 exports.authApp = async (req, res) => {
   // res.redirect(authorization_url);
-  https.request(authorization_url)
+  https.request((authorization_url) => {
+    res.redirect(authorization_url);
+    res.end()
+  });
 };
 
 exports.accessToken = async (req, res) => {
@@ -56,10 +59,10 @@ exports.accessToken = async (req, res) => {
           // const token = JSON.parse(tokenData);
           token = JSON.parse(tokenData);
           req.session.token = token;
-          console.log(token)
+          console.log(token);
           // Redirect to your home.html page in frontend
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
-          res.send(token)
+          res.send(token);
           // res.redirect('http://127.0.0.1:8000/home.html')
           // req.session.save()
           res.end();
@@ -84,12 +87,12 @@ exports.getProfileInformation = async (req, res) => {
   // res.send(token)
   // res.end()
   req.session.token = {
-    access_token: 'Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe',
-    token_type: 'Bearer',
+    access_token: "Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe",
+    token_type: "Bearer",
     expires_in: 1209600,
-    refresh_token: 'jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA'
-  }
-  console.log(req.session)
+    refresh_token: "jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA",
+  };
+  console.log(req.session);
   const profileOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
@@ -118,11 +121,11 @@ exports.getProfileInformation = async (req, res) => {
 
 exports.getCourses = async (req, res) => {
   req.session.token = {
-      access_token: 'Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe',
-      token_type: 'Bearer',
-      expires_in: 1209600,
-      refresh_token: 'jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA'
-    }
+    access_token: "Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe",
+    token_type: "Bearer",
+    expires_in: 1209600,
+    refresh_token: "jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA",
+  };
   const courseOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
@@ -151,11 +154,11 @@ exports.getCourses = async (req, res) => {
 
 exports.getCompEngEssAssignments = async (req, res) => {
   req.session.token = {
-    access_token: 'Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe',
-    token_type: 'Bearer',
+    access_token: "Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe",
+    token_type: "Bearer",
     expires_in: 1209600,
-    refresh_token: 'jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA'
-  }
+    refresh_token: "jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA",
+  };
   const assignmentOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
@@ -186,6 +189,6 @@ exports.logout = async (req, res) => {
   req.session.destroy();
   // Redirect to your index.html page in frontend
   // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
-  res.redirect('http://127.0.0.1:5500/login_cv/index.html');
-  res.end()
-}
+  res.redirect("http://127.0.0.1:5500/login_cv/index.html");
+  res.end();
+};
