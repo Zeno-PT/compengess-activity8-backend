@@ -6,7 +6,7 @@ const backendEC2IPAddress = "44.214.169.149";
 const redirect_uri = `http://${backendEC2IPAddress}:3000/courseville/access_token`;
 const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`;
 const access_token_url = "https://www.mycourseville.com/api/oauth/access_token";
-const token = {}
+let token = {}
 
 const https = require("https");
 const url = require("url");
