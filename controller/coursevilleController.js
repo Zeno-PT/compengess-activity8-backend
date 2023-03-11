@@ -69,8 +69,8 @@ exports.accessToken = async (req, res) => {
     });
     tokenReq.write(postData);
     tokenReq.end();
-    res.redirect('/courseville/get_profile_info')
-    // res.redirect('http://127.0.0.1:8000/home.html')
+    // res.redirect('/courseville/get_profile_info')
+    res.redirect('http://127.0.0.1:8000/home.html')
     // res.end();
   } else {
     res.writeHead(302, { Location: authorization_url });
