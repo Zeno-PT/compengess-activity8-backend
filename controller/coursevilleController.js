@@ -67,9 +67,9 @@ exports.accessToken = async (req, res) => {
     });
     tokenReq.write(postData);
     tokenReq.end();
-    // res.redirect('/courseville/get_profile_info')
-    res.redirect('http://127.0.0.1:8000/home.html')
-    res.end();
+    res.redirect('/courseville/get_profile_info')
+    // res.redirect('http://127.0.0.1:8000/home.html')
+    // res.end();
   } else {
     res.writeHead(302, { Location: authorization_url });
     res.end();
@@ -77,14 +77,14 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = async (req, res) => {
-  // res.send(req.session)
-  // res.end()
-  req.session.token = {
-    access_token: 'Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe',
-    token_type: 'Bearer',
-    expires_in: 1209600,
-    refresh_token: 'jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA'
-  }
+  res.send(req.session)
+  res.end()
+  // req.session.token = {
+  //   access_token: 'Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe',
+  //   token_type: 'Bearer',
+  //   expires_in: 1209600,
+  //   refresh_token: 'jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA'
+  // }
   console.log(req.session)
   const profileOptions = {
     headers: {
