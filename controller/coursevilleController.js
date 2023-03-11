@@ -82,8 +82,8 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = async (req, res) => {
-   token = JSON.parse(fs.readFile('./token.json', 'utf-8', err => {console.error(err)}))
-   req.session.token = token
+   token = fs.readFile('./token.json', 'utf-8', err => {console.error(err)})
+   req.session.token = JSON.parse(token)
   //  res.send(a)
   //  res.end()
   // res.send(token)
@@ -122,8 +122,8 @@ exports.getProfileInformation = async (req, res) => {
 };
 
 exports.getCourses = async (req, res) => {
-  token = JSON.parse(fs.readFile('./token.json', 'utf-8', err => {console.error(err)}))
-  req.session.token = token
+  token = fs.readFile('./token.json', 'utf-8', err => {console.error(err)})
+  req.session.token = JSON.parse(token)
   const courseOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
@@ -151,8 +151,8 @@ exports.getCourses = async (req, res) => {
 };
 
 exports.getCompEngEssAssignments = async (req, res) => {
-  token = JSON.parse(fs.readFile('./token.json', 'utf-8', err => {console.error(err)}))
-  req.session.token = token
+  token = fs.readFile('./token.json', 'utf-8', err => {console.error(err)})
+  req.session.token = JSON.parse(token)
   const assignmentOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
