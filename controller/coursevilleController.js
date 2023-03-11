@@ -57,7 +57,7 @@ exports.accessToken = async (req, res) => {
           token = JSON.parse(tokenData);
           req.session.token = token;
           console.log(token);
-          fs.writeFile('token.txt', token, err => {console.error(err)})
+          fs.writeFileSync('token.txt', JSON.stringify(token, null, 2), 'utf-8', err => {console.error(err)})
           // Redirect to your home.html page in frontend
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
           // res.send(token);
