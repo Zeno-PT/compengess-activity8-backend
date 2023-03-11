@@ -6,7 +6,6 @@ const backendEC2IPAddress = "44.214.169.149";
 const redirect_uri = `http://${backendEC2IPAddress}:3000/courseville/access_token`;
 const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`;
 const access_token_url = "https://www.mycourseville.com/api/oauth/access_token";
-let token = {};
 
 const https = require("https");
 const url = require("url");
@@ -54,10 +53,10 @@ exports.accessToken = async (req, res) => {
         });
         tokenRes.on("end", () => {
           // const token = JSON.parse(tokenData);
-          token = JSON.parse(tokenData);
+          const token = JSON.parse(tokenData);
           req.session.token = token;
           // console.log(token);
-          fs.writeFile('./token.json', JSON.stringify(token), 'utf-8', err => {console.error(err)})
+          fs.writeFile('./token.json', JSON.stringify(token, null, 2), 'utf-8', err => {console.error(err)})
           // Redirect to your home.html page in frontend
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
           // res.send(token);
@@ -82,7 +81,8 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = async (req, res) => {
-   token = fs.readFile('./token.json', 'utf-8', err => {console.error(err)})
+   const token = fs.readFile('./token.json', 'utf-8', err => {console.error(err)})
+   console.log(JSON.parse(token))
    req.session.token = JSON.parse(token)
   //  res.send(a)
   //  res.end()
@@ -122,7 +122,7 @@ exports.getProfileInformation = async (req, res) => {
 };
 
 exports.getCourses = async (req, res) => {
-  token = fs.readFile('./token.json', 'utf-8', err => {console.error(err)})
+  const token = fs.readFile('./token.json', 'utf-8', err => {console.error(err)})
   req.session.token = JSON.parse(token)
   const courseOptions = {
     headers: {
@@ -151,7 +151,7 @@ exports.getCourses = async (req, res) => {
 };
 
 exports.getCompEngEssAssignments = async (req, res) => {
-  token = fs.readFile('./token.json', 'utf-8', err => {console.error(err)})
+  const token = fs.readFile('./token.json', 'utf-8', err => {console.error(err)})
   req.session.token = JSON.parse(token)
   const assignmentOptions = {
     headers: {
