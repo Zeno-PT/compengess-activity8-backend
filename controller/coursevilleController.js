@@ -10,11 +10,11 @@ const https = require("https");
 const url = require("url");
 const querystring = require("querystring");
 
-exports.authApp = (req, res) => {
+exports.authApp = async (req, res) => {
   res.redirect(authorization_url);
 };
 
-exports.accessToken = (req, res) => {
+exports.accessToken = async (req, res) => {
   const parsedUrl = url.parse(req.url);
   const parsedQuery = querystring.parse(parsedUrl.query);
 
@@ -54,11 +54,9 @@ exports.accessToken = (req, res) => {
           req.session.token = token;
           // Redirect to your home.html page in frontend
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
-          console.log(req.session.token.access_token)
-          // res.redirect('http://127.0.0.1:5500/login_cv/home.html')
-          // location.href = "http://127.0.0.1:5500/login_cv/home.html"
-          req.session.save()
-          res.end();
+          
+          // req.session.save()
+          // res.end();
         });
       }
     );
@@ -67,13 +65,16 @@ exports.accessToken = (req, res) => {
     });
     tokenReq.write(postData);
     tokenReq.end();
+    console.log(req.session.token.access_token)
+    res.redirect('http://127.0.0.1:5500/login_cv/home.html')
+    res.end();
   } else {
     res.writeHead(302, { Location: authorization_url });
     res.end();
   }
 };
 
-exports.getProfileInformation = (req, res) => {
+exports.getProfileInformation = async (req, res) => {
   // res.send(req.session)
   // res.end()
   console.log(req.session)
@@ -103,7 +104,7 @@ exports.getProfileInformation = (req, res) => {
   profileReq.end();
 };
 
-exports.getCourses = (req, res) => {
+exports.getCourses = async (req, res) => {
   const courseOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
@@ -130,7 +131,7 @@ exports.getCourses = (req, res) => {
   courseReq.end();
 };
 
-exports.getCompEngEssAssignments = (req, res) => {
+exports.getCompEngEssAssignments = async (req, res) => {
   const assignmentOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
@@ -157,7 +158,7 @@ exports.getCompEngEssAssignments = (req, res) => {
   assignmentReq.end();
 };
 
-exports.logout = (req, res) => {
+exports.logout = async (req, res) => {
   req.session.destroy();
   // Redirect to your index.html page in frontend
   // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.

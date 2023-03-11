@@ -8,7 +8,7 @@ const coursevilleRoutes = require("./routes/coursevilleRoutes")
 
 const app = express();
 
-app.use(session({secret: 'my-secret', resave: false, saveUninitialized: true}))
+app.use(session({secret: 'my-secret', resave: false, saveUninitialized: false}))
 app.use(cors());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true}))
