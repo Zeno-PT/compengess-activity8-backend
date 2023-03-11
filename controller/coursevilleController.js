@@ -57,7 +57,7 @@ exports.accessToken = async (req, res) => {
           token = JSON.parse(tokenData);
           req.session.token = token;
           // console.log(token);
-          fs.writeFileSync('./token.json', JSON.stringify(token), 'utf-8', err => {console.error(err)})
+          fs.writeFile('./token.json', JSON.stringify(token), 'utf-8', err => {console.error(err)})
           // Redirect to your home.html page in frontend
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
           // res.send(token);
@@ -82,9 +82,8 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = async (req, res) => {
-   a = fs.readFileSync('./token.json', 'utf-8', err => {console.error(err)})
-   req.session.token = JSON.parse(a)
-   console.log(req.session)
+   token = JSON.parse(fs.readFile('./token.json', 'utf-8', err => {console.error(err)}))
+   req.session.token = token
   //  res.send(a)
   //  res.end()
   // res.send(token)
@@ -123,12 +122,8 @@ exports.getProfileInformation = async (req, res) => {
 };
 
 exports.getCourses = async (req, res) => {
-  req.session.token = {
-    access_token: "Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe",
-    token_type: "Bearer",
-    expires_in: 1209600,
-    refresh_token: "jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA",
-  };
+  token = JSON.parse(fs.readFile('./token.json', 'utf-8', err => {console.error(err)}))
+  req.session.token = token
   const courseOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
@@ -156,12 +151,8 @@ exports.getCourses = async (req, res) => {
 };
 
 exports.getCompEngEssAssignments = async (req, res) => {
-  req.session.token = {
-    access_token: "Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe",
-    token_type: "Bearer",
-    expires_in: 1209600,
-    refresh_token: "jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA",
-  };
+  token = JSON.parse(fs.readFile('./token.json', 'utf-8', err => {console.error(err)}))
+  req.session.token = token
   const assignmentOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
