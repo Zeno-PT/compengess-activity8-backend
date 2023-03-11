@@ -79,7 +79,7 @@ exports.accessToken = async (req, res) => {
 exports.getProfileInformation = async (req, res) => {
   // res.send(req.session)
   // res.end()
-  res.session.token = {
+  req.session.token = {
     access_token: 'Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe',
     token_type: 'Bearer',
     expires_in: 1209600,
