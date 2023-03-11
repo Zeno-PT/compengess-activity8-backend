@@ -62,10 +62,10 @@ exports.accessToken = async (req, res) => {
           console.log(token);
           // Redirect to your home.html page in frontend
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
-          res.send(token);
-          // res.redirect('http://127.0.0.1:8000/home.html')
+          // res.send(token);
+          res.redirect('http://127.0.0.1:8000/index.html')
           // req.session.save()
-          res.end();
+          // res.end();
         });
       }
     );
@@ -86,12 +86,12 @@ exports.accessToken = async (req, res) => {
 exports.getProfileInformation = async (req, res) => {
   // res.send(token)
   // res.end()
-  req.session.token = {
-    access_token: "Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe",
-    token_type: "Bearer",
-    expires_in: 1209600,
-    refresh_token: "jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA",
-  };
+  // req.session.token = {
+  //   access_token: "Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe",
+  //   token_type: "Bearer",
+  //   expires_in: 1209600,
+  //   refresh_token: "jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA",
+  // };
   console.log(req.session);
   const profileOptions = {
     headers: {
