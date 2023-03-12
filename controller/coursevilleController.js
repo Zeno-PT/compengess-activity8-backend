@@ -122,7 +122,7 @@ exports.getProfileInformation = (req, res) => {
   // };
   // res.redirect(`http://${frontendIPAddress}:${frontendPort}`);
   // res.end()
-  if (req.session.token.access_token !== undefined) {
+  if (req.session.token !== undefined) {
     const profileOptions = {
       headers: {
         // Authorization: `Bearer ${req.session.token}`,
