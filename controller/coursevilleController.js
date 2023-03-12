@@ -128,9 +128,9 @@ exports.getProfileInformation = (req, res) => {
   if (token !== undefined) {
     const profileOptions = {
       headers: {
-        Authorization: `Bearer ${req.session.token}`,
         // Authorization: `Bearer ${req.session.token}`,
-        // Authorization: `Bearer ${req.session.token.access_token}`,
+        // Authorization: `Bearer ${req.session.token}`,
+        Authorization: `Bearer ${req.session.token.access_token}`,
       },
     };
     const profileReq = https.request(
@@ -169,7 +169,7 @@ exports.getCourses = async (req, res) => {
   req.session.token = JSON.parse(token);
   const courseOptions = {
     headers: {
-      Authorization: `Bearer ${req.session.token}`,
+      Authorization: `Bearer ${req.session.token.access_token}`,
     },
   };
   const courseReq = https.request(
@@ -202,7 +202,7 @@ exports.getCompEngEssAssignments = async (req, res) => {
   req.session.token = JSON.parse(token);
   const assignmentOptions = {
     headers: {
-      Authorization: `Bearer ${req.session.token}`,
+      Authorization: `Bearer ${req.session.token.access_token}`,
     },
   };
   const assignmentReq = https.request(
