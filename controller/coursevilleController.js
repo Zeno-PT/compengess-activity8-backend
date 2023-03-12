@@ -230,7 +230,7 @@ exports.getCompEngEssAssignments = async (req, res) => {
 
 exports.logout = async (req, res) => {
   req.session.destroy();
-  fs.unlinkSync("./token.json");
+  // fs.unlinkSync("./token.json");
   res.redirect(`http://${frontendIPAddress}:${frontendPort}`);
   res.end();
 };
