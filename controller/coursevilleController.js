@@ -71,19 +71,19 @@ exports.accessToken = async (req, res) => {
           const token = JSON.parse(tokenData);
           req.session.token = token;
           console.log(req.session.token);
-          fs.writeFileSync(
-            "./token.json",
-            JSON.stringify(token),
-            "utf-8",
-            (err) => {
-              console.error(err);
-            }
-          );
+          // fs.writeFileSync(
+          //   "./token.json",
+          //   JSON.stringify(token),
+          //   "utf-8",
+          //   (err) => {
+          //     console.error(err);
+          //   }
+          // );
           // Redirect to your home.html page in frontend
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
           // res.send(token);
           if (req.session.token) {
-            // req.session.save();
+            req.session.save();
             res.redirect(`http://${frontendIPAddress}:${frontendPort}/home.html`);
             res.end();
           }
@@ -108,13 +108,10 @@ exports.accessToken = async (req, res) => {
 
 exports.getProfileInformation = (req, res) => {
   // req.session.token = 'kin3u8f3Fo4ALncQHa0FIZ5JjW8SRIQ5QrwhDW9P'
-  console.log(req.session.token);
-  const token = fs.readFileSync("./token.json", "utf-8", (err) => {
-    console.error(err);
-  });
-  req.session.token = JSON.parse(token);
-  //  res.send(a)
-  //  res.end()
+  // const token = fs.readFileSync("./token.json", "utf-8", (err) => {
+  //   console.error(err);
+  // });
+  // req.session.token = JSON.parse(token);
   // res.send(token)
   // res.end()
   // req.session.token = {
