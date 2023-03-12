@@ -2,6 +2,7 @@
 const client_id = "PWIuxwNVlZh70gSnWMoxfWcFpg5c7Odk1MLx3wSA";
 const client_secret = "yC5OC38phIdKrBBqCvrbyuxy0TZbGDkrZmokp9Ke";
 const backendEC2IPAddress = "44.214.169.149";
+// const backendEC2IPAddress = "127.0.0.1";
 // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
 const frontendIPAddress = "127.0.0.1";
 const frontendPort = "8000";
@@ -15,7 +16,19 @@ const url = require("url");
 const querystring = require("querystring");
 const fs = require("fs");
 
-exports.authApp = async (req, res) => {
+exports.authApp = (req, res) => {
+  // try {
+  //   req.session.token = "kin3u8f3Fo4ALncQHa0FIZ5JjW8SRIQ5QrwhDW9P";
+  //   console.log(req.session.token);
+  //   if (req.session.token) {
+  //     req.session.save();
+  //     res.redirect(`http://${frontendIPAddress}:${frontendPort}/home.html`);
+  //   }
+  // } catch (error) {
+  //   console.log(error);
+  // }
+  // res.end();
+  // res.redirect(`http://127.0.0.1:3000/courseville/get_profile_info`);
   res.redirect(authorization_url);
 };
 
@@ -55,7 +68,6 @@ exports.accessToken = async (req, res) => {
           tokenData += chunk;
         });
         tokenRes.on("end", () => {
-          // const token = JSON.parse(tokenData);
           const token = JSON.parse(tokenData);
           req.session.token = token;
           // console.log(token);
@@ -69,8 +81,11 @@ exports.accessToken = async (req, res) => {
           );
           // Redirect to your home.html page in frontend
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
-          // res.send(token);
-          res.redirect(`http://${frontendIPAddress}:${frontendPort}/home.html`);
+          res.send(token);
+          if (req.session.token) {
+            req.session.save();
+            res.redirect(`http://${frontendIPAddress}:${frontendPort}/home.html`);
+          }
           // req.session.save()
           // res.end();
         });
@@ -90,11 +105,13 @@ exports.accessToken = async (req, res) => {
   }
 };
 
-exports.getProfileInformation = async (req, res) => {
-  const token = fs.readFileSync("./token.json", "utf-8", (err) => {
-    console.error(err);
-  });
-  req.session.token = JSON.parse(token);
+exports.getProfileInformation = (req, res) => {
+  // req.session.token = 'kin3u8f3Fo4ALncQHa0FIZ5JjW8SRIQ5QrwhDW9P'
+  console.log(req.session.token);
+  // const token = fs.readFileSync("./token.json", "utf-8", (err) => {
+  //   console.error(err);
+  // });
+  // req.session.token = JSON.parse(token);
   //  res.send(a)
   //  res.end()
   // res.send(token)
@@ -105,40 +122,53 @@ exports.getProfileInformation = async (req, res) => {
   //   expires_in: 1209600,
   //   refresh_token: "jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA",
   // };
-  const profileOptions = {
-    headers: {
-      Authorization: `Bearer ${req.session.token.access_token}`,
-    },
-  };
-  const profileReq = https.request(
-    "https://www.mycourseville.com/api/v1/public/users/me",
-    profileOptions,
-    (profileRes) => {
-      let profileData = "";
-      profileRes.on("data", (chunk) => {
-        profileData += chunk;
-      });
-      profileRes.on("end", () => {
-        const profile = JSON.parse(profileData);
-        res.send(profile);
-        res.end();
-      });
-    }
-  );
-  profileReq.on("error", (err) => {
-    console.error(err);
-  });
-  profileReq.end();
+  // res.redirect(`http://${frontendIPAddress}:${frontendPort}`);
+  // res.end()
+  if (req.session.token !== undefined) {
+    const profileOptions = {
+      headers: {
+        Authorization: `Bearer ${req.session.token}`,
+        // Authorization: `Bearer ${req.session.token}`,
+        // Authorization: `Bearer ${req.session.token.access_token}`,
+      },
+    };
+    const profileReq = https.request(
+      "https://www.mycourseville.com/api/v1/public/users/me",
+      profileOptions,
+      (profileRes) => {
+        let profileData = "";
+        profileRes.on("data", (chunk) => {
+          profileData += chunk;
+        });
+        profileRes.on("end", () => {
+          const profile = JSON.parse(profileData);
+          res.send(profile);
+          console.log(profile);
+          res.end();
+        });
+      }
+    );
+    profileReq.on("error", (err) => {
+      console.error(err);
+    });
+    profileReq.end();
+  } else {
+    // If token not found (user is not login yet), redirect user to login page.
+    // res.header("mode", "no-cors");
+    // res.redirect("/courseville/auth_app");
+    console.log("Error, please logout and login again."),
+    res.end();
+  }
 };
 
 exports.getCourses = async (req, res) => {
-  const token = fs.readFileSync("./token.json", "utf-8", (err) => {
-    console.error(err);
-  });
-  req.session.token = JSON.parse(token);
+  // const token = fs.readFileSync("./token.json", "utf-8", (err) => {
+  //   console.error(err);
+  // });
+  // req.session.token = JSON.parse(token);
   const courseOptions = {
     headers: {
-      Authorization: `Bearer ${req.session.token.access_token}`,
+      Authorization: `Bearer ${req.session.token}`,
     },
   };
   const courseReq = https.request(
@@ -158,18 +188,20 @@ exports.getCourses = async (req, res) => {
   );
   courseReq.on("error", (err) => {
     console.error(err);
+    res.send(err);
+    res.end();
   });
   courseReq.end();
 };
 
 exports.getCompEngEssAssignments = async (req, res) => {
-  const token = fs.readFileSync("./token.json", "utf-8", (err) => {
-    console.error(err);
-  });
-  req.session.token = JSON.parse(token);
+  // const token = fs.readFileSync("./token.json", "utf-8", (err) => {
+  //   console.error(err);
+  // });
+  // req.session.token = JSON.parse(token);
   const assignmentOptions = {
     headers: {
-      Authorization: `Bearer ${req.session.token.access_token}`,
+      Authorization: `Bearer ${req.session.token}`,
     },
   };
   const assignmentReq = https.request(
@@ -189,13 +221,15 @@ exports.getCompEngEssAssignments = async (req, res) => {
   );
   assignmentReq.on("error", (err) => {
     console.error(err);
+    res.send(err);
+    res.end();
   });
   assignmentReq.end();
 };
 
 exports.logout = async (req, res) => {
   req.session.destroy();
-  fs.unlinkSync("./token.json");
+  // fs.unlinkSync("./token.json");
   res.redirect(`http://${frontendIPAddress}:${frontendPort}`);
   res.end();
 };

@@ -25,7 +25,7 @@ exports.getGroupMembers = async (req, res) => {
     res.send(data.Items);
   } catch (err) {
     console.error(err);
-    res.status(500).send(err.message);
+    res.status(500).send(err);
   }
 };
 exports.getItems = async (req, res) => {
@@ -37,7 +37,7 @@ exports.getItems = async (req, res) => {
     res.send(data.Items);
   } catch (err) {
     console.error(err);
-    res.status(500).send(err.message);
+    res.status(500).send(err);
   }
 };
 
@@ -52,7 +52,7 @@ exports.addItem = async (req, res) => {
     res.send(`Item id ${item.item_id} was created successfully.`);
   } catch (err) {
     console.error(err);
-    res.status(500).send(err.message);
+    res.status(500).send(err);
   }
 };
 
@@ -66,6 +66,6 @@ exports.deleteItem = async (req, res) => {
     res.send(`Item id ${req.params.item_id} was deleted successfully.`);
   } catch (err) {
     console.error(err);
-    res.status(500).send(err.message);
+    res.status(500).send(err);
   }
 };
