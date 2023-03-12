@@ -125,7 +125,7 @@ exports.getProfileInformation = (req, res) => {
   // };
   // res.redirect(`http://${frontendIPAddress}:${frontendPort}`);
   // res.end()
-  if (req.session.token !== undefined) {
+  if (token !== undefined) {
     const profileOptions = {
       headers: {
         Authorization: `Bearer ${req.session.token}`,
