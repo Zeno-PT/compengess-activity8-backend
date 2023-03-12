@@ -70,7 +70,7 @@ exports.accessToken = async (req, res) => {
         tokenRes.on("end", () => {
           const token = JSON.parse(tokenData);
           req.session.token = token;
-          // console.log(token);
+          console.log(req.session.token);
           // fs.writeFileSync(
           //   "./token.json",
           //   JSON.stringify(token),
@@ -85,6 +85,7 @@ exports.accessToken = async (req, res) => {
           if (req.session.token) {
             req.session.save();
             res.redirect(`http://${frontendIPAddress}:${frontendPort}/home.html`);
+            res.end();
           }
           // req.session.save()
           // res.end();
