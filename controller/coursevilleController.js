@@ -83,7 +83,7 @@ exports.accessToken = async (req, res) => {
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
           // res.send(token);
           if (req.session.token) {
-            req.session.save();
+            // req.session.save();
             res.redirect(`http://${frontendIPAddress}:${frontendPort}/home.html`);
             res.end();
           }
