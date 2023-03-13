@@ -29,11 +29,12 @@ exports.authApp = (req, res) => {
   // }
   // res.end();
   // res.redirect(`http://127.0.0.1:3000/courseville/get_profile_info`);
+  console.log('Request 1', req.protocol + '://' + req.get('host') + req.originalUrl)
   res.redirect(authorization_url);
 };
 
 exports.accessToken = async (req, res) => {
-  console.log('Request', req.protocol + '://' + req.get('host') + req.originalUrl)
+  console.log('Request 2', req.protocol + '://' + req.get('host') + req.originalUrl)
   // console.log('Response', res)
   const parsedUrl = url.parse(req.url);
   const parsedQuery = querystring.parse(parsedUrl.query);
