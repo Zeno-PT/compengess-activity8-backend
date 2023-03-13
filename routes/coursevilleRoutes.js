@@ -12,7 +12,7 @@ router.get(
   coursevilleController.getCourseAssignments
 );
 router.get(
-  "/get_assignment_detail/:item_cid",
+  "/get_assignment_detail/:item_id",
   coursevilleController.getAssignmentDetail
 );
 router.get("/logout", coursevilleController.logout);

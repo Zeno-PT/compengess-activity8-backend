@@ -207,6 +207,10 @@ exports.getCourseAssignments = async (req, res) => {
 };
 
 exports.getAssignmentDetail = async (req, res) => {
+  const token = fs.readFileSync("./token.json", "utf-8", (err) => {
+    console.error(err);
+  });
+  req.session.token = JSON.parse(token);
   const itemOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
