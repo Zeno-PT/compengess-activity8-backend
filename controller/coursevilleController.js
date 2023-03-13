@@ -42,6 +42,7 @@ exports.accessToken = async (req, res) => {
   }
 
   if (parsedQuery.code) {
+    console.log(parsedQuery.code)
     const postData = querystring.stringify({
       grant_type: "authorization_code",
       code: parsedQuery.code,
