@@ -107,7 +107,7 @@ exports.accessToken = async (req, res) => {
 exports.getProfileInformation = (req, res) => {
   if (!fs.existsSync("./token.json")) {
     console.log("Redirected to login page.");
-    res.redirect("/courseville/auth_app");
+    res.redirect(`http://${frontendCvIPAddress}`);
   }
   const token = fs.readFileSync("./token.json", "utf-8", (err) => {
     console.log(err);
