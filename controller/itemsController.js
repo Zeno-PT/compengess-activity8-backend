@@ -5,25 +5,20 @@ const {
   DeleteCommand,
   ScanCommand,
 } = require("@aws-sdk/lib-dynamodb");
-const dotenv = require("dotenv");
-dotenv.config({ path: "./../config.env" });
 
+const AWS_REGION = "us-east-1";
 
-// const config = {
-//   accessKeyId: process.env.aws_access_key_id,
-//   secretAccessKey: process.env.aws_secret_access_key,
-//   sessionToken: process.env.aws_session_token,
-//   region: process.env.aws_region,
-// };
-const AWS_REGION='us-east-1'
-const AWS_ACCESS_KEY_ID='ASIATMS7XTWS2OC3GM6R'
-const AWS_SECRET_ACCESS_KEY='v31OqKw6/2iCcDxc2BRJZbrvZDgR0u+Jx9hSuyEQ'
-const AWS_SESSION_TOKEN='FwoGZXIvYXdzEBEaDNDir8UtAimb1dKpwCLlAVjkGNvoOICJ6TjyJl6UMsJf6CUTxOGNRYPsJQ7N3+91rExvd7rN8b0KOLkmgEbWjFBpvCVLGfQkCs12Vum2jCJpQYPy2u3FEl9T4ASBRgpOxiY+yR3cpmKDoVhkBwTRWWpLEXhe1danQTmJjAD+8I4UGZPxJfonK8aMUPg9DcGu4IzBZUTiVPydPot1H3fuUfnNeF8saDk/rh8bsDSGcu28uVvigoLkKTZPECypXu7UTzsiWNovTr3ZgTKFfrlWPwnP+x8mlFAIXImdbas6IRcAteGDqDmiULgkM/fQ1o5CqqU3mEAoyqG7oAYyLQfWM2LmPwqdIkBMZoBh4zclytJUmGZIO7ZTce+HaK9jDUsHjJPqMp+35/1RYw=='
+const aws_items_table_name = "items_db_99";
+const aws_group_members_table_name = "group_members_99";
+const AWS_ACCESS_KEY_ID = "ASIATMS7XTWS2OC3GM6R";
+const AWS_SECRET_ACCESS_KEY = "v31OqKw6/2iCcDxc2BRJZbrvZDgR0u+Jx9hSuyEQ";
+const AWS_SESSION_TOKEN =
+  "FwoGZXIvYXdzEBEaDNDir8UtAimb1dKpwCLlAVjkGNvoOICJ6TjyJl6UMsJf6CUTxOGNRYPsJQ7N3+91rExvd7rN8b0KOLkmgEbWjFBpvCVLGfQkCs12Vum2jCJpQYPy2u3FEl9T4ASBRgpOxiY+yR3cpmKDoVhkBwTRWWpLEXhe1danQTmJjAD+8I4UGZPxJfonK8aMUPg9DcGu4IzBZUTiVPydPot1H3fuUfnNeF8saDk/rh8bsDSGcu28uVvigoLkKTZPECypXu7UTzsiWNovTr3ZgTKFfrlWPwnP+x8mlFAIXImdbas6IRcAteGDqDmiULgkM/fQ1o5CqqU3mEAoyqG7oAYyLQfWM2LmPwqdIkBMZoBh4zclytJUmGZIO7ZTce+HaK9jDUsHjJPqMp+35/1RYw==";
 
 const docClient = new DynamoDBClient({ regions: AWS_REGION });
 exports.getGroupMembers = async (req, res) => {
   const params = {
-    TableName: process.env.aws_group_members_table_name,
+    TableName: aws_group_members_table_name,
   };
   try {
     const data = await docClient.send(new ScanCommand(params));
@@ -35,7 +30,7 @@ exports.getGroupMembers = async (req, res) => {
 };
 exports.getItems = async (req, res) => {
   const params = {
-    TableName: process.env.aws_items_table_name,
+    TableName: aws_items_table_name,
   };
   try {
     const data = await docClient.send(new ScanCommand(params));
@@ -49,7 +44,7 @@ exports.getItems = async (req, res) => {
 exports.addItem = async (req, res) => {
   const item = { ...req.body };
   const params = {
-    TableName: process.env.aws_items_table_name,
+    TableName: aws_items_table_name,
     Item: item,
   };
   try {
@@ -63,7 +58,7 @@ exports.addItem = async (req, res) => {
 
 exports.deleteItem = async (req, res) => {
   var params = {
-    TableName: process.env.aws_items_table_name,
+    TableName: aws_items_table_name,
     Key: { item_id: req.params.item_id },
   };
   try {
