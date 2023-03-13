@@ -33,8 +33,8 @@ exports.authApp = (req, res) => {
 };
 
 exports.accessToken = async (req, res) => {
-  console.log(req)
-  console.log(res)
+  console.log('Request', req.protocol + '://' + req.get('host') + req.originalUrl)
+  // console.log('Response', res)
   const parsedUrl = url.parse(req.url);
   const parsedQuery = querystring.parse(parsedUrl.query);
 
