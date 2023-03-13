@@ -223,7 +223,10 @@ exports.getCompEngEssAssignments = async (req, res) => {
 
 exports.logout = async (req, res) => {
   req.session.destroy();
-  // fs.unlinkSync("./token.json");
+  try {
+    fs.unlinkSync("./token.json");
+  } catch (error) {}
+
   res.redirect(`http://${frontendCvIPAddress}`);
   res.end();
 };
