@@ -46,8 +46,8 @@ exports.accessToken = async (req, res) => {
     const postData = querystring.stringify({
       grant_type: "authorization_code",
       code: parsedQuery.code,
-      client_id: process.env.client_id,
-      client_secret: process.env.client_secret,
+      client_id: client_id,
+      client_secret: client_secret,
       redirect_uri: redirect_uri,
     });
 
