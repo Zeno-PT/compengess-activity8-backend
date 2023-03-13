@@ -105,15 +105,12 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = (req, res) => {
-  if (fs.existsSync("./token.json")) {
-    console.log('file exists');
-  } else {
-    console.log('file not found!');
+  if (!fs.existsSync("./token.json")) {
+    console.log("Redirected to login page.");
+    res.redirect("/courseville/auth_app");
   }
   const token = fs.readFileSync("./token.json", "utf-8", (err) => {
-    if (err) throw err;
-    console.log("It's saved!");
-    res.redirect("/courseville/auth_app");
+    console.log(err);
   });
 
   req.session.token = JSON.parse(token);
