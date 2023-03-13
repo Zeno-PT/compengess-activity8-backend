@@ -70,17 +70,17 @@ exports.accessToken = async (req, res) => {
         tokenRes.on("end", () => {
           const token = JSON.parse(tokenData);
           req.session.token = token;
-          console.log(req.session.token);
-          fs.writeFileSync(
-            "./token.json",
-            JSON.stringify(token),
-            "utf-8",
-            (err) => {
-              console.error(err);
-            }
-          );
+          req.session.kuy = 'kuy';
+          console.log(req.session);
+          // fs.writeFileSync(
+          //   "./token.json",
+          //   JSON.stringify(token),
+          //   "utf-8",
+          //   (err) => {
+          //     console.error(err);
+          //   }
+          // );
           // Redirect to your home.html page in frontend
-          // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
           // res.send(token);
           if (req.session.token) {
             res.redirect(`http://${frontendCvIPAddress}/home.html`);
@@ -106,14 +106,16 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = (req, res) => {
-  if (!fs.existsSync("./token.json")) {
-    console.log("Please press logout button and login again.");
-  }
-  const token = fs.readFileSync("./token.json", "utf-8", (err) => {
-    console.log(err);
-  });
+  // if (!fs.existsSync("./token.json")) {
+  //   console.log("Please press logout button and login again.");
+  // }
+  // const token = fs.readFileSync("./token.json", "utf-8", (err) => {
+  //   console.log(err);
+  // });
 
-  req.session.token = JSON.parse(token);
+  // req.session.token = JSON.parse(token);
+  console.log('Hi')
+  console.log(req.session)
   const profileOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
@@ -243,8 +245,9 @@ exports.logout = async (req, res) => {
   req.session.destroy();
   try {
     fs.unlinkSync("./token.json");
-  } catch (error) {}
-
+  } catch (error) {
+    console.log(error);
+  }
   res.redirect(`http://${frontendCvIPAddress}`);
   res.end();
 };
