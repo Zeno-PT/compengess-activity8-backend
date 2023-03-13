@@ -9,7 +9,7 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./../config.env" });
 
 const docClient = new DynamoDBClient({ regions: "us-east-1" });
-const aws_remote_config = {
+const config = {
   accessKeyId: process.env.aws_access_key_id,
   secretAccessKey: process.env.aws_secret_access_key,
   sessionToken: process.env.aws_session_token,
