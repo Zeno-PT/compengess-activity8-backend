@@ -106,57 +106,40 @@ exports.accessToken = async (req, res) => {
 
 exports.getProfileInformation = (req, res) => {
   if (!fs.existsSync("./token.json")) {
-    console.log("Redirected to login page.");
-    res.redirect(`http://${frontendCvIPAddress}`);
+    console.log("Please press logout button and login again.");
+    res.redirect('/courseville/logout')
   }
   const token = fs.readFileSync("./token.json", "utf-8", (err) => {
     console.log(err);
   });
 
   req.session.token = JSON.parse(token);
-  // res.send(token)
-  // res.end()
-  // req.session.token = {
-  //   access_token: "Zde3Y8ULPSf8r7DGqFGSF6dhcyKwvjQcBNGamPKe",
-  //   token_type: "Bearer",
-  //   expires_in: 1209600,
-  //   refresh_token: "jdp1HaKnKLQBCkmTdfE6ZM0HClw9URxj4c8zCZmA",
-  // };
-  // res.redirect(`http://${frontendIPAddress}:${frontendPort}`);
-  // res.end()
-  if (req.session.token !== undefined) {
-    const profileOptions = {
-      headers: {
-        // Authorization: `Bearer ${req.session.token}`,
-        Authorization: `Bearer ${req.session.token.access_token}`,
-      },
-    };
-    const profileReq = https.request(
-      "https://www.mycourseville.com/api/v1/public/users/me",
-      profileOptions,
-      (profileRes) => {
-        let profileData = "";
-        profileRes.on("data", (chunk) => {
-          profileData += chunk;
-        });
-        profileRes.on("end", () => {
-          const profile = JSON.parse(profileData);
-          res.send(profile);
-          console.log(profile);
-          res.end();
-        });
-      }
-    );
-    profileReq.on("error", (err) => {
-      console.error(err);
-    });
-    profileReq.end();
-  } else {
-    // If token not found (user is not login yet), redirect user to login page.
-    // res.header("mode", "no-cors");
-    res.redirect("/courseville/auth_app");
-    console.log("Error, please logout and login again.");
-  }
+  const profileOptions = {
+    headers: {
+      // Authorization: `Bearer ${req.session.token}`,
+      Authorization: `Bearer ${req.session.token.access_token}`,
+    },
+  };
+  const profileReq = https.request(
+    "https://www.mycourseville.com/api/v1/public/users/me",
+    profileOptions,
+    (profileRes) => {
+      let profileData = "";
+      profileRes.on("data", (chunk) => {
+        profileData += chunk;
+      });
+      profileRes.on("end", () => {
+        const profile = JSON.parse(profileData);
+        res.send(profile);
+        console.log(profile);
+        res.end();
+      });
+    }
+  );
+  profileReq.on("error", (err) => {
+    console.error(err);
+  });
+  profileReq.end();
 };
 
 exports.getCourses = async (req, res) => {

@@ -16,17 +16,17 @@ const session_option = {
   secret: "my-secret",
   resave: true,
   saveUninitialized: false,
-  // cookie: {
-  //   // setting this false for http connections
-  //   secure: false,
-  // },
+  cookie: {
+    // setting this false for http connections
+    secure: false,
+  },
 };
 
-const corsOptions = {
-  origin: ["http://127.0.0.1:8000"],
-  // optionsSuccessStatus: 200,
-  credentials: true // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
+// const corsOptions = {
+//   origin: ["http://127.0.0.1:8000"],
+//   // optionsSuccessStatus: 200,
+//   credentials: true // some legacy browsers (IE11, various SmartTVs) choke on 204
+// };
 
 app.use(session(session_option));
 app.use(cors());
