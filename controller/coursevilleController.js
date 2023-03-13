@@ -161,6 +161,7 @@ exports.getCourses = async (req, res) => {
       courseRes.on("end", () => {
         const courses = JSON.parse(courseData);
         res.send(courses);
+        console.log(courses);
         res.end();
       });
     }
@@ -217,7 +218,7 @@ exports.getAssignmentDetail = async (req, res) => {
     },
   };
   const itemReq = https.request(
-    `https://www.mycourseville.com/api/v1/public/get/course/assignment?item_id=${req.params.item_id}`,
+    `https://www.mycourseville.com/api/v1/public/get/item/assignment?item_id=${req.params.item_id}`,
     itemOptions,
     (itemRes) => {
       let itemData = "";
