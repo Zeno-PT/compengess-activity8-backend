@@ -69,6 +69,10 @@ exports.accessToken = async (req, res) => {
         });
         tokenRes.on("end", () => {
           const token = JSON.parse(tokenData);
+          if (token){
+            res.redirect(`http://${frontendCvIPAddress}/home.html`);
+            res.end()
+          }
           req.session.token = token;
           req.session.kuy = 'kuy';
           console.log(req.session);
@@ -82,10 +86,10 @@ exports.accessToken = async (req, res) => {
           // );
           // Redirect to your home.html page in frontend
           // res.send(token);
-          if (req.session.token) {
-            res.redirect(`http://${frontendCvIPAddress}/home.html`);
-            res.end();
-          }
+          // if (req.session.token) {
+          //   res.redirect(`http://${frontendCvIPAddress}/home.html`);
+          //   res.end();
+          // }
           // req.session.save()
           // res.end();
         });
