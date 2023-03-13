@@ -9,14 +9,6 @@ const {
 const dotenv = require("dotenv");
 dotenv.config({ path: "./../config.env" });
 
-// const aws_items_table_name = "items_db_99";
-// const aws_group_members_table_name = "group_members_99";
-// const AWS_REGION = "us-east-1";
-// const AWS_ACCESS_KEY_ID = "ASIATMS7XTWS2OC3GM6R";
-// const AWS_SECRET_ACCESS_KEY = "v31OqKw6/2iCcDxc2BRJZbrvZDgR0u+Jx9hSuyEQ";
-// const AWS_SESSION_TOKEN =
-//   "FwoGZXIvYXdzEBEaDNDir8UtAimb1dKpwCLlAVjkGNvoOICJ6TjyJl6UMsJf6CUTxOGNRYPsJQ7N3+91rExvd7rN8b0KOLkmgEbWjFBpvCVLGfQkCs12Vum2jCJpQYPy2u3FEl9T4ASBRgpOxiY+yR3cpmKDoVhkBwTRWWpLEXhe1danQTmJjAD+8I4UGZPxJfonK8aMUPg9DcGu4IzBZUTiVPydPot1H3fuUfnNeF8saDk/rh8bsDSGcu28uVvigoLkKTZPECypXu7UTzsiWNovTr3ZgTKFfrlWPwnP+x8mlFAIXImdbas6IRcAteGDqDmiULgkM/fQ1o5CqqU3mEAoyqG7oAYyLQfWM2LmPwqdIkBMZoBh4zclytJUmGZIO7ZTce+HaK9jDUsHjJPqMp+35/1RYw==";
-
 const docClient = new DynamoDBClient({ regions: process.env.AWS_REGION });
 exports.getGroupMembers = async (req, res) => {
   const params = {
