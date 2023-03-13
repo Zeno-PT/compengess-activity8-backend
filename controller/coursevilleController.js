@@ -105,9 +105,9 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = (req, res) => {
-  // req.session.token = "kin3u8f3Fo4ALncQHa0FIZ5JjW8SRIQ5QrwhDW9P";
   const token = fs.readFileSync("./token.json", "utf-8", (err) => {
-    console.error(err);
+    // console.error(err);
+    res.redirect("/courseville/auth_app");
   });
   req.session.token = JSON.parse(token);
   // res.send(token)
