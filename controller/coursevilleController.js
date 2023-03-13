@@ -6,7 +6,6 @@ const backendEC2IPAddress = "44.214.169.149";
 // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
 const frontendCvIPAddress = "127.0.0.1:8000";
 
-
 const redirect_uri = `http://${backendEC2IPAddress}:3000/courseville/access_token`;
 const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`;
 const access_token_url = "https://www.mycourseville.com/api/oauth/access_token";
@@ -83,9 +82,7 @@ exports.accessToken = async (req, res) => {
           // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
           // res.send(token);
           if (req.session.token) {
-            res.redirect(
-              `http://${frontendCvIPAddress}/home.html`
-            );
+            res.redirect(`http://${frontendCvIPAddress}/home.html`);
             res.end();
           }
           // req.session.save()
@@ -113,7 +110,7 @@ exports.getProfileInformation = (req, res) => {
     console.error(err);
   });
   req.session.token = JSON.parse(token);
-  console.log(req.session.token)
+  console.log(req.session.token);
   // res.send(token)
   // res.end()
   // req.session.token = {
@@ -154,8 +151,9 @@ exports.getProfileInformation = (req, res) => {
   } else {
     // If token not found (user is not login yet), redirect user to login page.
     // res.header("mode", "no-cors");
-    // res.redirect("/courseville/auth_app");
-    console.log("Error, please logout and login again."), res.end();
+    res.redirect("/courseville/auth_app");
+    console.log("Error, please logout and login again.");
+    res.end();
   }
 };
 
