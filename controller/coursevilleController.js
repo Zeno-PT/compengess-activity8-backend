@@ -42,7 +42,6 @@ exports.accessToken = async (req, res) => {
   }
 
   if (parsedQuery.code) {
-    console.log(parsedQuery.code)
     const postData = querystring.stringify({
       grant_type: "authorization_code",
       code: parsedQuery.code,
@@ -111,7 +110,6 @@ exports.getProfileInformation = (req, res) => {
     console.error(err);
   });
   req.session.token = JSON.parse(token);
-  console.log(req.session.token);
   // res.send(token)
   // res.end()
   // req.session.token = {
@@ -154,7 +152,6 @@ exports.getProfileInformation = (req, res) => {
     // res.header("mode", "no-cors");
     res.redirect("/courseville/auth_app");
     console.log("Error, please logout and login again.");
-    res.end();
   }
 };
 
