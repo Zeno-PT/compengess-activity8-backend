@@ -2,11 +2,15 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
+
 const AppError = require("./utils/appError");
 const itemsRoutes = require("./routes/itemRoutes");
 const coursevilleRoutes = require("./routes/coursevilleRoutes");
 
 const app = express();
+
 
 const session_option = {
   secret: "my-secret",

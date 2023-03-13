@@ -4,8 +4,8 @@ const client_secret = "yC5OC38phIdKrBBqCvrbyuxy0TZbGDkrZmokp9Ke";
 const backendEC2IPAddress = "44.214.169.149";
 // const backendEC2IPAddress = "127.0.0.1";
 // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
-const frontendIPAddress = "127.0.0.1";
-const frontendPort = "8000";
+const frontendCvIPAddress = "127.0.0.1:8000";
+
 
 const redirect_uri = `http://${backendEC2IPAddress}:3000/courseville/access_token`;
 const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`;
@@ -46,8 +46,8 @@ exports.accessToken = async (req, res) => {
     const postData = querystring.stringify({
       grant_type: "authorization_code",
       code: parsedQuery.code,
-      client_id: client_id,
-      client_secret: client_secret,
+      client_id: process.env.client_id,
+      client_secret: process.env.client_secret,
       redirect_uri: redirect_uri,
     });
 
@@ -84,7 +84,9 @@ exports.accessToken = async (req, res) => {
           // res.send(token);
           if (req.session.token) {
             req.session.save();
-            res.redirect(`http://${frontendIPAddress}:${frontendPort}/home.html`);
+            res.redirect(
+              `http://${frontendCvIPAddress}/home.html`
+            );
             res.end();
           }
           // req.session.save()
@@ -107,7 +109,7 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = (req, res) => {
-  req.session.token = 'kin3u8f3Fo4ALncQHa0FIZ5JjW8SRIQ5QrwhDW9P'
+  // req.session.token = "kin3u8f3Fo4ALncQHa0FIZ5JjW8SRIQ5QrwhDW9P";
   const token = fs.readFileSync("./token.json", "utf-8", (err) => {
     console.error(err);
   });
@@ -153,8 +155,7 @@ exports.getProfileInformation = (req, res) => {
     // If token not found (user is not login yet), redirect user to login page.
     // res.header("mode", "no-cors");
     // res.redirect("/courseville/auth_app");
-    console.log("Error, please logout and login again."),
-    res.end();
+    console.log("Error, please logout and login again."), res.end();
   }
 };
 
@@ -227,6 +228,6 @@ exports.getCompEngEssAssignments = async (req, res) => {
 exports.logout = async (req, res) => {
   req.session.destroy();
   // fs.unlinkSync("./token.json");
-  res.redirect(`http://${frontendIPAddress}:${frontendPort}`);
+  res.redirect(`http://${frontendCvIPAddress}`);
   res.end();
 };
