@@ -81,6 +81,8 @@ exports.accessToken = async (req, res) => {
           req.session.token = token;
           req.session.kuy = 'kuy';
           req.session.save()
+          console.log('KUY1')
+          console.log(req.sessionID)
           console.log(req.session);
           // fs.writeFileSync(
           //   "./token.json",
@@ -124,7 +126,8 @@ exports.getProfileInformation = (req, res) => {
   // });
 
   // req.session.token = JSON.parse(token);
-  console.log('Hi')
+  console.log('KUY2')
+  console.log(req.sessionID)
   console.log(req.session)
   const profileOptions = {
     headers: {
