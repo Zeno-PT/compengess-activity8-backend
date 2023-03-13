@@ -15,6 +15,7 @@ const config = {
   sessionToken: process.env.aws_session_token,
   region: process.env.aws_region,
 };
+const AWS_REGION='us-east-1'
 
 exports.getGroupMembers = async (req, res) => {
   const params = {
