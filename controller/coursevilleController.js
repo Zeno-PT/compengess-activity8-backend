@@ -107,7 +107,6 @@ exports.accessToken = async (req, res) => {
 exports.getProfileInformation = (req, res) => {
   if (!fs.existsSync("./token.json")) {
     console.log("Please press logout button and login again.");
-    res.redirect('/courseville/logout')
   }
   const token = fs.readFileSync("./token.json", "utf-8", (err) => {
     console.log(err);
@@ -116,7 +115,6 @@ exports.getProfileInformation = (req, res) => {
   req.session.token = JSON.parse(token);
   const profileOptions = {
     headers: {
-      // Authorization: `Bearer ${req.session.token}`,
       Authorization: `Bearer ${req.session.token.access_token}`,
     },
   };
@@ -175,7 +173,7 @@ exports.getCourses = async (req, res) => {
   courseReq.end();
 };
 
-exports.getCompEngEssAssignments = async (req, res) => {
+exports.getCourseAssignments = async (req, res) => {
   const token = fs.readFileSync("./token.json", "utf-8", (err) => {
     console.error(err);
   });
@@ -206,6 +204,35 @@ exports.getCompEngEssAssignments = async (req, res) => {
     res.end();
   });
   assignmentReq.end();
+};
+
+exports.getAssignmentDetail = async (req, res) => {
+  const itemOptions = {
+    headers: {
+      Authorization: `Bearer ${req.session.token.access_token}`,
+    },
+  };
+  const itemReq = https.request(
+    `https://www.mycourseville.com/api/v1/public/get/course/assignment?item_id=${req.params.item_id}`,
+    itemOptions,
+    (itemRes) => {
+      let itemData = "";
+      itemRes.on("data", (chunk) => {
+        itemData += chunk;
+      });
+      itemRes.on("end", () => {
+        const items = JSON.parse(itemData);
+        res.send(items);
+        res.end();
+      });
+    }
+  );
+  itemReq.on("error", (err) => {
+    console.error(err);
+    res.send(err);
+    res.end();
+  });
+  itemReq.end();
 };
 
 exports.logout = async (req, res) => {
