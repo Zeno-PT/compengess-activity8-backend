@@ -33,6 +33,7 @@ exports.authApp = (req, res) => {
 };
 
 exports.accessToken = async (req, res) => {
+  console(res.url)
   const parsedUrl = url.parse(req.url);
   const parsedQuery = querystring.parse(parsedUrl.query);
 
@@ -69,7 +70,7 @@ exports.accessToken = async (req, res) => {
         });
         tokenRes.on("end", () => {
           const token = JSON.parse(tokenData);
-          if (token){
+          if (token) {
             res.redirect(`http://${frontendCvIPAddress}/home.html`);
             res.end()
           }
