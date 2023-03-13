@@ -80,6 +80,7 @@ exports.accessToken = async (req, res) => {
           }
           req.session.token = token;
           req.session.kuy = 'kuy';
+          req.session.save()
           console.log(req.session);
           // fs.writeFileSync(
           //   "./token.json",
