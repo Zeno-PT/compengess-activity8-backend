@@ -129,7 +129,6 @@ exports.getProfileInformation = (req, res) => {
       profileRes.on("end", () => {
         const profile = JSON.parse(profileData);
         res.send(profile);
-        console.log(profile);
         res.end();
       });
     }
@@ -161,7 +160,6 @@ exports.getCourses = async (req, res) => {
       courseRes.on("end", () => {
         const courses = JSON.parse(courseData);
         res.send(courses);
-        console.log(courses);
         res.end();
       });
     }
