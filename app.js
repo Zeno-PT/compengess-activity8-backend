@@ -33,7 +33,7 @@ const corsOptions = {
   credentials: true // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-app.use(session(session_option));
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -48,5 +48,7 @@ app.get("/", (req, res) => {
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });
+
+app.use(session(session_option));
 
 module.exports = app;
