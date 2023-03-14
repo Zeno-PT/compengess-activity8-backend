@@ -4,8 +4,8 @@ const client_secret = "yC5OC38phIdKrBBqCvrbyuxy0TZbGDkrZmokp9Ke";
 const backendEC2IPAddress = "44.214.169.149";
 // const backendEC2IPAddress = "127.0.0.1";
 // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
-// const frontendCvIPAddress = "35.174.220.149";
-const frontendCvIPAddress = "127.0.0.1:8000";
+const frontendCvIPAddress = "44.214.169.149";
+// const frontendCvIPAddress = "127.0.0.1:8000";
 let session_id;
 
 const redirect_uri = `http://${backendEC2IPAddress}:3000/courseville/access_token`;

@@ -28,7 +28,7 @@ const sessionOptions = {
 };
 
 const corsOptions = {
-  origin: ["http://127.0.0.1:8000"],
+  origin: ["http://127.0.0.1:8000", "http://44.214.169.149"],
   // optionsSuccessStatus: 200,
   credentials: true // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
