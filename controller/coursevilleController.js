@@ -6,6 +6,7 @@ const backendEC2IPAddress = "44.214.169.149";
 // TODO: Change to EC2 frontend-cv-api-XX public IP later when deployed.
 // const frontendCvIPAddress = "35.174.220.149";
 const frontendCvIPAddress = "127.0.0.1:8000";
+let session_id;
 
 const redirect_uri = `http://${backendEC2IPAddress}:3000/courseville/access_token`;
 const authorization_url = `https://www.mycourseville.com/api/oauth/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`;
@@ -15,6 +16,7 @@ const https = require("https");
 const url = require("url");
 const querystring = require("querystring");
 const fs = require("fs");
+// const { Store } = require("express-session");
 
 exports.authApp = (req, res) => {
   // try {
@@ -31,6 +33,7 @@ exports.authApp = (req, res) => {
   // res.redirect(`http://127.0.0.1:3000/courseville/get_profile_info`);
   console.log('Request 1', req.protocol + '://' + req.get('host') + req.originalUrl)
   console.log('Request referer 1', req.header('Referer'))
+  session_id = req.sessionID
   res.redirect(authorization_url);
 };
 
@@ -79,9 +82,8 @@ exports.accessToken = async (req, res) => {
             res.end()
           }
           req.session.token = token;
-          req.session.kuy = 'kuy';
+          console.log('A', )
           req.session.save()
-          console.log('KUY1')
           console.log(req.sessionID)
           console.log(req.session);
           // fs.writeFileSync(
@@ -118,15 +120,14 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = (req, res) => {
-  // if (!fs.existsSync("./token.json")) {
-  //   console.log("Please press logout button and login again.");
-  // }
-  // const token = fs.readFileSync("./token.json", "utf-8", (err) => {
-  //   console.log(err);
-  // });
+  if (!fs.existsSync("./token.json")) {
+    console.log("Please press logout button and login again.");
+  }
+  const token = fs.readFileSync("./token.json", "utf-8", (err) => {
+    console.log(err);
+  });
 
-  // req.session.token = JSON.parse(token);
-  console.log('KUY2')
+  req.session.token = JSON.parse(token);
   console.log(req.sessionID)
   console.log(req.session)
   const profileOptions = {
@@ -156,10 +157,10 @@ exports.getProfileInformation = (req, res) => {
 };
 
 exports.getCourses = async (req, res) => {
-  const token = fs.readFileSync("./token.json", "utf-8", (err) => {
-    console.error(err);
-  });
-  req.session.token = JSON.parse(token);
+  // const token = fs.readFileSync("./token.json", "utf-8", (err) => {
+  //   console.error(err);
+  // });
+  // req.session.token = JSON.parse(token);
   const courseOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
