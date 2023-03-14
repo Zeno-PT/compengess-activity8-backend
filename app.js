@@ -16,10 +16,10 @@ const session_option = {
   secret: "my-secret",
   resave: true,
   saveUninitialized: false,
-  cookie: {
-    // setting this false for http connections
-    secure: false,
-  },
+  // cookie: {
+  //   // setting this false for http connections
+  //   secure: false,
+  // },
 };
 
 // const corsOptions = {
