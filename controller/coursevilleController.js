@@ -157,7 +157,7 @@ exports.getProfileInformation = (req, res) => {
   profileReq.end();
 };
 
-exports.getCourses = async (req, res) => {
+exports.getCourses = (req, res) => {
   // const token = fs.readFileSync("./token.json", "utf-8", (err) => {
   //   console.error(err);
   // });
@@ -193,7 +193,7 @@ exports.getCourses = async (req, res) => {
   // courseReq.end();
 };
 
-exports.getCourseAssignments = async (req, res) => {
+exports.getCourseAssignments = (req, res) => {
   const token = fs.readFileSync("./token.json", "utf-8", (err) => {
     console.error(err);
   });
@@ -226,7 +226,7 @@ exports.getCourseAssignments = async (req, res) => {
   assignmentReq.end();
 };
 
-exports.getAssignmentDetail = async (req, res) => {
+exports.getAssignmentDetail = (req, res) => {
   const token = fs.readFileSync("./token.json", "utf-8", (err) => {
     console.error(err);
   });
@@ -259,7 +259,7 @@ exports.getAssignmentDetail = async (req, res) => {
   itemReq.end();
 };
 
-exports.logout = async (req, res) => {
+exports.logout = (req, res) => {
   req.session.destroy();
   try {
     fs.unlinkSync("./token.json");
