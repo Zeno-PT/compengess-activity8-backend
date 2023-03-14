@@ -120,14 +120,14 @@ exports.accessToken = async (req, res) => {
 };
 
 exports.getProfileInformation = (req, res) => {
-  if (!fs.existsSync("./token.json")) {
-    console.log("Please press logout button and login again.");
-  }
-  const token = fs.readFileSync("./token.json", "utf-8", (err) => {
-    console.log(err);
-  });
+  // if (!fs.existsSync("./token.json")) {
+  //   console.log("Please press logout button and login again.");
+  // }
+  // const token = fs.readFileSync("./token.json", "utf-8", (err) => {
+  //   console.log(err);
+  // });
 
-  req.session.token = JSON.parse(token);
+  // req.session.token = JSON.parse(token);
   console.log(req.sessionID)
   console.log(req.session)
   const profileOptions = {
