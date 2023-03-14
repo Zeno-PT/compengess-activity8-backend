@@ -29,7 +29,7 @@ const session_option = {
 // };
 
 app.use(session(session_option));
-app.use(cors());
+// app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("static"));
