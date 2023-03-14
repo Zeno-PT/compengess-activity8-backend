@@ -38,8 +38,8 @@ exports.authApp = (req, res) => {
 };
 
 exports.accessToken = async (req, res) => {
-  console.log('Request 2', req.protocol + '://' + req.get('host') + req.originalUrl)
-  console.log('Request referer 2', req.header('Referer'))
+  console.log('Request A', req.protocol + '://' + req.get('host') + req.originalUrl)
+  console.log('Request referer A', req.header('Referer'))
   // console.log('Response', res)
   const parsedUrl = url.parse(req.url);
   const parsedQuery = querystring.parse(parsedUrl.query);
@@ -127,6 +127,8 @@ exports.getProfileInformation = (req, res) => {
   // });
 
   // req.session.token = JSON.parse(token);
+  console.log('Request B', req.protocol + '://' + req.get('host') + req.originalUrl)
+  console.log('Request referer B', req.header('Referer'))
   console.log('Session B', req.sessionID)
   console.log(req.session)
   const profileOptions = {
