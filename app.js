@@ -13,7 +13,7 @@ const coursevilleRoutes = require("./routes/coursevilleRoutes");
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/myapp', {
+mongoose.connect('mongodb://localhost:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8./myapp', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -26,7 +26,7 @@ const mongoStore = new MongoStore({
 const sessionOptions = {
   secret: "my-secret",
   resave: true,
-  saveUninitialized: false,
+  saveUninitialized: true,
   store: mongoStore,
   // cookie: {
   //   // setting this false for http connections
