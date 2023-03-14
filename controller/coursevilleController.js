@@ -162,6 +162,10 @@ exports.getCourses = async (req, res) => {
   //   console.error(err);
   // });
   // req.session.token = JSON.parse(token);
+  console.log('Request C', req.protocol + '://' + req.get('host') + req.originalUrl)
+  console.log('Request referer C', req.header('Referer'))
+  console.log('Session C', req.sessionID)
+  console.log(req.session)
   const courseOptions = {
     headers: {
       Authorization: `Bearer ${req.session.token.access_token}`,
