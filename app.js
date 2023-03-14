@@ -13,7 +13,7 @@ const coursevilleRoutes = require("./routes/coursevilleRoutes");
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8./myapp', {
+mongoose.connect('mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8./myapp', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
