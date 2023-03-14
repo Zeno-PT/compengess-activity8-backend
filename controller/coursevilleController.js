@@ -166,31 +166,31 @@ exports.getCourses = async (req, res) => {
   console.log('Request referer C', req.header('Referer'))
   console.log('Session C', req.sessionID)
   console.log(req.session)
-  // res.send('Hihi')
-  const courseOptions = {
-    headers: {
-      Authorization: `Bearer ${req.session.token.access_token}`,
-    },
-  };
-  const courseReq = https.request(
-    "https://www.mycourseville.com/api/v1/public/get/user/courses",
-    courseOptions,
-    (courseRes) => {
-      let courseData = "";
-      courseRes.on("data", (chunk) => {
-        courseData += chunk;
-      });
-      courseRes.on("end", () => {
-        const courses = JSON.parse(courseData);
-        res.send(courses);
-        res.end();
-      });
-    }
-  );
-  courseReq.on("error", (err) => {
-    console.error(err);
-  });
-  courseReq.end();
+  res.send('Hihi')
+  // const courseOptions = {
+  //   headers: {
+  //     Authorization: `Bearer ${req.session.token.access_token}`,
+  //   },
+  // };
+  // const courseReq = https.request(
+  //   "https://www.mycourseville.com/api/v1/public/get/user/courses",
+  //   courseOptions,
+  //   (courseRes) => {
+  //     let courseData = "";
+  //     courseRes.on("data", (chunk) => {
+  //       courseData += chunk;
+  //     });
+  //     courseRes.on("end", () => {
+  //       const courses = JSON.parse(courseData);
+  //       res.send(courses);
+  //       res.end();
+  //     });
+  //   }
+  // );
+  // courseReq.on("error", (err) => {
+  //   console.error(err);
+  // });
+  // courseReq.end();
 };
 
 exports.getCourseAssignments = async (req, res) => {
