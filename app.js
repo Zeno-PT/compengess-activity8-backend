@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+const MongoStore = require('connect-mongo')(session);
+const mongoose = require('mongoose');
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 
@@ -11,11 +13,21 @@ const coursevilleRoutes = require("./routes/coursevilleRoutes");
 
 const app = express();
 
+mongoose.connect('mongodb://127.0.0.1:27017/myapp', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const mongoStore = new MongoStore({
+  mongooseConnection: mongoose.connection,
+  ttl: 60 * 60, // Session TTL in seconds (optional)
+});
 
 const sessionOptions = {
   secret: "my-secret",
   resave: true,
   saveUninitialized: false,
+  store: mongoStore,
   // cookie: {
   //   // setting this false for http connections
   //   secure: false,
