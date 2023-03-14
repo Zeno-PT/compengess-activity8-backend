@@ -10,6 +10,8 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./../config.env" });
 
 const docClient = new DynamoDBClient({ regions: process.env.AWS_REGION });
+
+// TODO 1.0 Walkthrough
 exports.getGroupMembers = async (req, res) => {
   const params = {
     TableName: process.env.aws_group_members_table_name,
@@ -22,6 +24,8 @@ exports.getGroupMembers = async (req, res) => {
     res.status(500).send(err);
   }
 };
+
+// TODO 1.1 get items
 exports.getItems = async (req, res) => {
   const params = {
     TableName: process.env.aws_items_table_name,
@@ -35,6 +39,7 @@ exports.getItems = async (req, res) => {
   }
 };
 
+// TODO 1.2 add item
 exports.addItem = async (req, res) => {
   const item = { ...req.body };
   const params = {
@@ -50,6 +55,7 @@ exports.addItem = async (req, res) => {
   }
 };
 
+// TODO 1.3 delete item
 exports.deleteItem = async (req, res) => {
   var params = {
     TableName: process.env.aws_items_table_name,
