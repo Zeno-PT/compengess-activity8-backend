@@ -12,15 +12,15 @@ const coursevilleRoutes = require("./routes/coursevilleRoutes");
 const app = express();
 
 
-const session_option = {
+const sessionOptions = {
   secret: "my-secret",
   resave: true,
   saveUninitialized: false,
-  cookie: {
-    // setting this false for http connections
-    secure: false,
-    // httpOnly: false
-  },
+  // cookie: {
+  //   // setting this false for http connections
+  //   secure: false,
+  //   // httpOnly: false
+  // },
   // genid: (req) => {
   //   // Use the client's IP address as the session ID
   //   return req.ip;
@@ -33,8 +33,8 @@ const corsOptions = {
   credentials: true // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-app.use(session(session_option));
-app.use(cors());
+app.use(session(sessionOptions));
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("static"));
