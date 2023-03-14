@@ -37,7 +37,7 @@ exports.authApp = (req, res) => {
   res.redirect(authorization_url);
 };
 
-exports.accessToken = async (req, res) => {
+exports.accessToken = (req, res) => {
   console.log('Request A', req.protocol + '://' + req.get('host') + req.originalUrl)
   console.log('Request referer A', req.header('Referer'))
   // console.log('Response', res)

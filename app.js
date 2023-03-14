@@ -42,7 +42,7 @@ app.use(express.static("static"));
 app.use("/items", itemsRoutes);
 app.use("/courseville", coursevilleRoutes);
 app.get("/", (req, res) => {
-  res.send("Congratulation. This server is succesfully run.");
+  res.send("Congratulation. This server is successfully run.");
 });
 
 app.all("*", (req, res, next) => {
