@@ -22,14 +22,14 @@ const session_option = {
   // },
 };
 
-// const corsOptions = {
-//   origin: ["http://127.0.0.1:8000"],
-//   // optionsSuccessStatus: 200,
-//   credentials: true // some legacy browsers (IE11, various SmartTVs) choke on 204
-// };
+const corsOptions = {
+  origin: ["http://127.0.0.1:8000"],
+  // optionsSuccessStatus: 200,
+  credentials: true // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
 app.use(session(session_option));
-// app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("static"));
