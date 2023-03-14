@@ -16,11 +16,15 @@ const session_option = {
   secret: "my-secret",
   resave: true,
   saveUninitialized: false,
-  cookie: {
-    // setting this false for http connections
-    secure: false,
-    httpOnly: false
-  },
+  // cookie: {
+  //   // setting this false for http connections
+  //   secure: false,
+  //   httpOnly: false
+  // },
+  genid: (req) => {
+    // Use the client's IP address as the session ID
+    return req.ip;
+  }
 };
 
 const corsOptions = {
